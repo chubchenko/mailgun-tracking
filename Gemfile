@@ -1,4 +1,13 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-# Specify your gem's dependencies in mailgun-tracking.gemspec
 gemspec
+
+group :development do
+  gem 'overcommit'
+  gem 'rake', '~> 10.0'
+  gem 'rubocop'
+end
+
+group :test do
+  gem 'rspec', '~> 3.6'
+end
