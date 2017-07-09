@@ -1,0 +1,8 @@
+{
+  "domain": "mail.example.com",
+  "Message-Id": "<20160329071939.35138.9413.6915422C@mail.example.com>",
+  "event": "delivered",
+  "timestamp": "1499697910",
+  "token": "b5751a49a024483da8d41c3684f98b8f",
+  "signature": "374e0b1a3deeb57318c783d43ff71093fbf26406a452761dab91bf346a93b49e"
+}
