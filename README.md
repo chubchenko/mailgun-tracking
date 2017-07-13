@@ -29,7 +29,7 @@ Mailgun::Tracking.configure do |config|
   config.api_key = ENV['MAILGUN_API_KEY']
 end
 
-Workflow::MailgunTracking.subscribe(:delivered) do |payload|
+Mailgun::Tracking.subscribe(:delivered) do |payload|
   # Do something with the incoming data.
 end
 ```
