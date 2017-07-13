@@ -10,7 +10,7 @@ group :development do
 end
 
 group :test do
+  gem 'rack'
   gem 'rspec', '~> 3.6'
   gem 'simplecov', require: false
-  gem 'rack'
 end
