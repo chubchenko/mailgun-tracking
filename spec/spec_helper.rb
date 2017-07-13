@@ -1,14 +1,23 @@
-require "bundler/setup"
-require "mailgun/tracking"
+require 'rack'
+require 'simplecov'
+require 'bundler/setup'
+require 'mailgun/tracking'
+
+require_relative 'support/fixture'
+require_relative 'support/rack_helpers'
+
+SimpleCov.start
+
+Mailgun::Tracking.configure do |config|
+  config.api_key = 'key-qblubkqnkdn4lfes5oscf57ryllaia42'
+end
 
 RSpec.configure do |config|
-  # Enable flags like --only-failures and --next-failure
-  config.example_status_persistence_file_path = ".rspec_status"
-
-  # Disable RSpec exposing methods globally on `Module` and `main`
-  config.disable_monkey_patching!
+  config.include(RackHelpers)
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.order = :random
 end
