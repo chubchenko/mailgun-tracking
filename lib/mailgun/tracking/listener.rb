@@ -7,12 +7,12 @@ module Mailgun
         @subscribers = Hash.new { |h, k| h[k] = [] }
       end
 
-      def add_subscriber(event, &block)
-        @subscribers[event.to_sym] << block
+      def add_subscriber(name, subscriber)
+        @subscribers[name.to_sym] << subscriber
       end
 
-      def broadcast(event, payload)
-        @subscribers[event.to_sym].each { |subscriber| subscriber.call(payload) }
+      def broadcast(name, payload)
+        @subscribers[name.to_sym].each { |subscriber| subscriber.call(payload) }
       end
     end
   end

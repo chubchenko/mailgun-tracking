@@ -9,7 +9,7 @@ module Mailgun
         @env = env
 
         if mailgun_tracking_request?
-          Mailgun::Tracking.broadcast(request.params.fetch('event'), request.params)
+          Mailgun::Tracking.notifier.broadcast(request.params.fetch('event'), request.params)
           [200, {}, []]
         else
           @app.call(env)

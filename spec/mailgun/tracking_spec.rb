@@ -13,7 +13,6 @@ RSpec.describe Mailgun::Tracking do
     let(:listener) { instance_double(Mailgun::Tracking::Listener) }
 
     before do
-      described_class.clear_cached_variables
       allow(listener).to receive(:add_subscriber)
       allow(Mailgun::Tracking::Listener).to receive(:new) { listener }
     end
@@ -31,7 +30,6 @@ RSpec.describe Mailgun::Tracking do
     let(:listener) { instance_double(Mailgun::Tracking::Listener) }
 
     before do
-      described_class.clear_cached_variables
       allow(Mailgun::Tracking::Signature).to receive(:verify!)
       allow(listener).to receive(:broadcast)
       allow(Mailgun::Tracking::Listener).to receive(:new) { listener }
