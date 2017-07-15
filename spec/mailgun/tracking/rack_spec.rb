@@ -7,8 +7,12 @@ RSpec.describe Mailgun::Tracking::Rack do
     let(:app) { proc { [200, {}, []] } }
     let(:payload) { fixture('delivered.json') }
     let(:code) { rack.call(env)[0] }
+    let(:notifier) { instance_double(Mailgun::Tracking::Notifier) }
 
-    before { allow(Mailgun::Tracking).to receive(:broadcast) }
+    before do
+      allow(notifier).to receive(:broadcast)
+      allow(Mailgun::Tracking).to receive(:notifier) { notifier }
+    end
 
     context 'when a request to a endpoint with a POST method' do
       let(:env) { env_for('http://localhost:3000/mailgun', method: :post, params: payload) }
@@ -16,7 +20,7 @@ RSpec.describe Mailgun::Tracking::Rack do
       it { expect(code).to eq(200) }
       it do
         code
-        expect(Mailgun::Tracking).to have_received(:broadcast).with('delivered', payload)
+        expect(notifier).to have_received(:broadcast).with('delivered', payload)
       end
     end
 
@@ -26,7 +30,7 @@ RSpec.describe Mailgun::Tracking::Rack do
       it { expect(code).to eq(200) }
       it do
         code
-        expect(Mailgun::Tracking).not_to have_received(:broadcast)
+        expect(Mailgun::Tracking).not_to have_received(:notifier)
       end
     end
 
@@ -37,7 +41,7 @@ RSpec.describe Mailgun::Tracking::Rack do
       it { expect(code).to eq(200) }
       it do
         code
-        expect(Mailgun::Tracking).not_to have_received(:broadcast)
+        expect(Mailgun::Tracking).not_to have_received(:notifier)
       end
     end
   end

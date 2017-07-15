@@ -5,6 +5,7 @@ require 'mailgun/tracking/rack'
 require 'mailgun/tracking/signature'
 require 'mailgun/tracking/subscriber_adapter'
 require 'mailgun/tracking/version'
+require 'mailgun/tracking/railtie' if defined? Rails
 
 module Mailgun
   module Tracking

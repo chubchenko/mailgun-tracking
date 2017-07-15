@@ -3,20 +3,20 @@ require 'spec_helper'
 RSpec.describe Mailgun::Tracking::Listener do
   subject(:listener) { described_class.new }
 
-  let(:block) { proc {} }
+  let(:subscriber_adapter) { instance_double(Mailgun::Tracking::SubscriberAdapter) }
 
   describe '#add_subscriber' do
     it 'adds subscriber' do
-      expect { listener.add_subscriber(:delivered, &block) }.to change(listener, :subscribers)
+      expect { listener.add_subscriber(:delivered, subscriber_adapter) }.to change(listener, :subscribers)
         .from({})
-        .to(delivered: [block])
+        .to(delivered: [subscriber_adapter])
     end
 
     it 'adds multiple subscribers with the same name' do
       expect do
-        listener.add_subscriber(:delivered, &block)
-        listener.add_subscriber('delivered', &block)
-      end.to change(listener, :subscribers).from({}).to(delivered: [block, block])
+        listener.add_subscriber(:delivered, subscriber_adapter)
+        listener.add_subscriber('delivered', subscriber_adapter)
+      end.to change(listener, :subscribers).from({}).to(delivered: [subscriber_adapter, subscriber_adapter])
     end
   end
 
@@ -24,19 +24,19 @@ RSpec.describe Mailgun::Tracking::Listener do
     let(:payload) { fixture('delivered.json') }
 
     before do
-      allow(block).to receive(:call)
-      listener.add_subscriber(:delivered, &block)
+      allow(subscriber_adapter).to receive(:call)
+      listener.add_subscriber(:delivered, subscriber_adapter)
     end
 
-    it 'executes block' do
+    it 'executes subscriber' do
       listener.broadcast(:delivered, payload)
-      expect(block).to have_received(:call).with(payload)
+      expect(subscriber_adapter).to have_received(:call).with(payload)
     end
 
-    it 'executes multiple blocks' do
-      listener.add_subscriber(:delivered, &block)
+    it 'executes multiple subscribers' do
+      listener.add_subscriber(:delivered, subscriber_adapter)
       listener.broadcast('delivered', payload)
-      expect(block).to have_received(:call).with(payload).twice
+      expect(subscriber_adapter).to have_received(:call).with(payload).twice
     end
   end
 end
