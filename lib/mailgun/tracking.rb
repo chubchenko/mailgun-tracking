@@ -1,3 +1,4 @@
+require 'mailgun/tracking/event'
 require 'mailgun/tracking/exceptions'
 require 'mailgun/tracking/listener'
 require 'mailgun/tracking/middleware'
