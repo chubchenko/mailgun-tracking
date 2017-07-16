@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Artem Chubchenko']
   spec.email         = ['artem.chubchenko@gmail.com']
 
-  spec.summary       = 'Integration for Mailgun Webhooks'
+  spec.summary       = 'Integration with Mailgun Webhooks'
   spec.description   = spec.summary
   spec.homepage      = 'https://github.com/chubchenko/mailgun-tracking'
   spec.license       = 'MIT'
