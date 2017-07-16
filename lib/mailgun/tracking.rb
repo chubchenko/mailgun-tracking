@@ -1,8 +1,11 @@
 require 'mailgun/tracking/exceptions'
 require 'mailgun/tracking/listener'
-require 'mailgun/tracking/rack'
+require 'mailgun/tracking/middleware'
+require 'mailgun/tracking/notifier'
 require 'mailgun/tracking/signature'
+require 'mailgun/tracking/subscriber'
 require 'mailgun/tracking/version'
+require 'mailgun/tracking/railtie' if defined?(Rails)
 
 module Mailgun
   module Tracking
@@ -21,25 +24,8 @@ module Mailgun
 
     module_function
 
-    def subscribe(event, &block)
-      listener.add_subscriber(event, &block)
-    end
-
-    def broadcast(event, payload)
-      Signature.verify!(payload)
-      listener.broadcast(event, payload)
-    end
-
-    def clear_cached_variables
-      @listener = nil
-    end
-
-    private
-
-    module_function
-
-    def listener
-      @listener ||= Listener.new
+    def notifier
+      @notifier ||= Notifier.new
     end
   end
 end

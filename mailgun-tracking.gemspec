@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Artem Chubchenko']
   spec.email         = ['artem.chubchenko@gmail.com']
 
-  spec.summary       = 'Integration for Mailgun Webhooks'
+  spec.summary       = 'Integration with Mailgun Webhooks'
   spec.description   = spec.summary
   spec.homepage      = 'https://github.com/chubchenko/mailgun-tracking'
   spec.license       = 'MIT'
@@ -19,5 +19,5 @@ Gem::Specification.new do |spec|
   spec.test_files    = Dir['{spec}/**/*']
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.0.0'
+  spec.required_ruby_version = '>= 1.9.3'
 end

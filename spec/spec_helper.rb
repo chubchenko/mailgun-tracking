@@ -5,6 +5,7 @@ require 'mailgun/tracking'
 
 require_relative 'support/fixture'
 require_relative 'support/rack_helpers'
+require_relative 'support/shared_examples/subscriber'
 
 SimpleCov.start
 
