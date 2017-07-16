@@ -25,12 +25,25 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-Mailgun::Tracking.configure do |config|
-  config.api_key = ENV['MAILGUN_API_KEY']
+class Delivered
+  def call(payload)
+    # Do something with the incoming data.
+  end
 end
 
-Mailgun::Tracking.subscribe(:delivered) do |payload|
-  # Do something with the incoming data.
+Mailgun::Tracking.configure do |config|
+  config.api_key = ENV['MAILGUN_API_KEY']
+  config.endpoint = 'new-endpoint'
+
+  config.notifier.subscribe :delivered do |payload|
+    # Do something with the incoming data.
+  end
+
+  config.notifier.subscribe :delivered, Delivered.new
+
+  config.notifier.all do |payload|
+    # Handle all event types.
+  end
 end
 ```
 
