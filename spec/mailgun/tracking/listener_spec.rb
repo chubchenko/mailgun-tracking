@@ -3,20 +3,23 @@ require 'spec_helper'
 RSpec.describe Mailgun::Tracking::Listener do
   subject(:listener) { described_class.new }
 
-  let(:block) { proc {} }
+  let(:callable) { proc {} }
+  let(:subscriber) { instance_double(Mailgun::Tracking::Subscriber::Evented) }
 
   describe '#add_subscriber' do
+    before { allow(Mailgun::Tracking::Subscriber).to receive(:for).with(/delivered/, callable) { subscriber } }
+
     it 'adds subscriber' do
-      expect { listener.add_subscriber(:delivered, &block) }.to change(listener, :subscribers)
-        .from({})
-        .to(delivered: [block])
+      expect { listener.add_subscriber(:delivered, callable) }.to change(listener, :subscribers)
+        .from([])
+        .to([subscriber])
     end
 
     it 'adds multiple subscribers with the same name' do
       expect do
-        listener.add_subscriber(:delivered, &block)
-        listener.add_subscriber('delivered', &block)
-      end.to change(listener, :subscribers).from({}).to(delivered: [block, block])
+        listener.add_subscriber(:delivered, callable)
+        listener.add_subscriber('delivered', callable)
+      end.to change(listener, :subscribers).from([]).to([subscriber, subscriber])
     end
   end
 
@@ -24,19 +27,22 @@ RSpec.describe Mailgun::Tracking::Listener do
     let(:payload) { fixture('delivered.json') }
 
     before do
-      allow(block).to receive(:call)
-      listener.add_subscriber(:delivered, &block)
+      allow(subscriber).to receive(:call)
+      allow(subscriber).to receive(:subscribed_to?).with(/delivered/) { true }
+      allow(Mailgun::Tracking::Subscriber).to receive(:for).with(:delivered, callable) { subscriber }
+
+      listener.add_subscriber(:delivered, callable)
     end
 
-    it 'executes block' do
+    it 'executes subscriber' do
       listener.broadcast(:delivered, payload)
-      expect(block).to have_received(:call).with(payload)
+      expect(subscriber).to have_received(:call).with(payload)
     end
 
-    it 'executes multiple blocks' do
-      listener.add_subscriber(:delivered, &block)
+    it 'executes multiple subscribers' do
+      listener.add_subscriber(:delivered, callable)
       listener.broadcast('delivered', payload)
-      expect(block).to have_received(:call).with(payload).twice
+      expect(subscriber).to have_received(:call).with(payload).twice
     end
   end
 end
