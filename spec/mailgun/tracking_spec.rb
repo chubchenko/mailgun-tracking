@@ -10,8 +10,8 @@ RSpec.describe Mailgun::Tracking do
   end
 
   describe '.notifier' do
-    it 'returns Notifier instance' do
-      expect(described_class.notifier).to an_instance_of(Mailgun::Tracking::Notifier)
+    it 'returns an instance of Mailgun::Tracking::Notifier' do
+      expect(described_class.notifier).to be_instance_of(Mailgun::Tracking::Notifier)
     end
   end
 end

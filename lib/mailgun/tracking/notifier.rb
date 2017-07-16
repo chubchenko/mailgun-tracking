@@ -5,17 +5,17 @@ module Mailgun
         @listener ||= listener
       end
 
-      def subscribe(name, callable = Proc.new)
-        listener.add_subscriber(name, SubscriberAdapter.call(callable))
+      def subscribe(event, callable = Proc.new)
+        listener.add_subscriber(event, callable)
       end
 
       def all(callable = Proc.new)
-        listener.add_subscriber(nil, SubscriberAdapter.call(callable))
+        listener.add_subscriber(nil, callable)
       end
 
-      def broadcast(name, payload)
+      def broadcast(event, payload)
         Signature.verify!(payload)
-        listener.broadcast(name, payload)
+        listener.broadcast(event, payload)
       end
 
       private

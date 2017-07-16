@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Mailgun::Tracking::Rack do
+RSpec.describe Mailgun::Tracking::Middleware do
   subject(:rack) { described_class.new(app) }
 
   describe '#call' do

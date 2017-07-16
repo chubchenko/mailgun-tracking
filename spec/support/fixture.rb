@@ -1,14 +1,19 @@
 require 'json'
 
 class FixtureFinder
-  FIXTURE_PATH = File.expand_path('../fixtures', __dir__)
-
   def initialize(file)
     @file = file
+    @fixture_path = File.expand_path('../fixtures', dir)
   end
 
   def find
-    File.read(FIXTURE_PATH + '/' + @file)
+    File.read(@fixture_path + '/' + @file)
+  end
+
+  private
+
+  def dir
+    File.dirname(__FILE__)
   end
 end
 

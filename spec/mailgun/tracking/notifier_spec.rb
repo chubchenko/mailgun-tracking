@@ -6,50 +6,27 @@ RSpec.describe Mailgun::Tracking::Notifier do
   let(:listener) { instance_double(Mailgun::Tracking::Listener) }
 
   describe '#subscribe' do
-    let(:subscriber) { proc {} }
-    let(:subscriber_adapter) { instance_double(Mailgun::Tracking::SubscriberAdapter) }
+    let(:callable) { proc {} }
 
-    before do
-      allow(listener).to receive(:add_subscriber)
-      allow(Mailgun::Tracking::Listener).to receive(:new) { listener }
-      allow(Mailgun::Tracking::SubscriberAdapter).to receive(:call).with(subscriber) { subscriber_adapter }
-    end
-
-    it 'wraps subscriber' do
-      notifier.subscribe(:delivered, subscriber)
-
-      expect(Mailgun::Tracking::SubscriberAdapter).to have_received(:call).with(subscriber)
-    end
+    before { allow(listener).to receive(:add_subscriber) }
 
     it 'subscribes on event' do
-      notifier.subscribe(:delivered, subscriber)
+      notifier.subscribe(:delivered, callable)
 
       expect(listener).to have_received(:add_subscriber)
-        .with(:delivered, subscriber_adapter)
+        .with(:delivered, callable)
     end
   end
 
   describe '#all' do
-    let(:subscriber) { proc {} }
-    let(:subscriber_adapter) { instance_double(Mailgun::Tracking::SubscriberAdapter) }
+    let(:callable) { proc {} }
 
-    before do
-      allow(listener).to receive(:add_subscriber)
-      allow(Mailgun::Tracking::Listener).to receive(:new) { listener }
-      allow(Mailgun::Tracking::SubscriberAdapter).to receive(:call).with(subscriber) { subscriber_adapter }
-    end
-
-    it 'wraps subscriber' do
-      notifier.all(subscriber)
-
-      expect(Mailgun::Tracking::SubscriberAdapter).to have_received(:call).with(subscriber)
-    end
+    before { allow(listener).to receive(:add_subscriber) }
 
     it 'subscribes on all events' do
-      notifier.all(subscriber)
+      notifier.all(callable)
 
-      expect(listener).to have_received(:add_subscriber)
-        .with(nil, subscriber_adapter)
+      expect(listener).to have_received(:add_subscriber).with(nil, callable)
     end
   end
 
