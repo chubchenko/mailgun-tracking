@@ -7,6 +7,7 @@ group :development do
   gem 'rake'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'yard'
 end
 
 group :test do
