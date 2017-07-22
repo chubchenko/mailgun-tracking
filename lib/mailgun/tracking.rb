@@ -25,6 +25,7 @@ module Mailgun
       attr_accessor :endpoint
 
       # Default way to setup Mailgun Tracking.
+      #
       # @example
       #   Mailgun::Tracking.configure do |config|
       #     config.api_key = ENV['MAILGUN_API_KEY']
@@ -40,6 +41,7 @@ module Mailgun
     module_function
 
     # A Notifier instance.
+    #
     # @example
     #   Mailgun::Tracking.configure do |config|
     #     config.notifier.subscribe :delivered do |payload|
