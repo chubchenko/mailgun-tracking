@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
+  gem 'fasterer'
   gem 'overcommit'
   gem 'rake', '~> 10.0'
   gem 'rubocop'
