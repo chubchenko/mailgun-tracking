@@ -10,6 +10,7 @@ module Mailgun
       argument :api_key, required: false
       argument :endpoint, required: false
 
+      # Copies the initialization file.
       def copy_initializer_file
         template('mailgun_tracking.rb.erb', 'config/initializers/mailgun_tracking.rb')
       end

@@ -25,15 +25,36 @@ Or install it yourself as:
 
     $ gem install mailgun-tracking
 
+## Configuration
+
+### Rails
+
+To integrate Mailgun Tracking with your Rails application, you need to know
+your api key and endpoint. Invoke the following command
+and replace `API_KEY` and `ENDPOINT` with your values:
+
+```bash
+rails generate mailgun:tracking:install API_KEY ENDPOINT
+```
+
+This command will generate the Mailgun Tracking configuration file under
+`config/initializers/mailgun_tracking.rb`.
+
 ## Usage
 
 ```ruby
-class Delivered
+class Bounced
+  def initialize(logger)
+    @logger = logger
+  end
+
   def call(payload)
-    # Do something with the incoming data.
+    @logger.info(payload)
   end
 end
+```
 
+```ruby
 Mailgun::Tracking.configure do |config|
   config.api_key = ENV['MAILGUN_API_KEY']
   config.endpoint = 'new-endpoint'
@@ -42,7 +63,7 @@ Mailgun::Tracking.configure do |config|
     # Do something with the incoming data.
   end
 
-  config.notifier.subscribe :delivered, Delivered.new
+  config.notifier.subscribe :bounced, Bounced.new
 
   config.notifier.all do |payload|
     # Handle all event types.
