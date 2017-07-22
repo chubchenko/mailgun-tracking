@@ -11,7 +11,7 @@ RSpec.describe Mailgun::Tracking::Signature do
     end
 
     context 'when the signature comparison is unsuccessful' do
-      before { payload.merge!('timestamp' => '') }
+      before { payload['timestamp'] = '' }
 
       it { expect { described_class.verify!(payload) }.to raise_error(Mailgun::Tracking::InvalidSignature) }
     end
@@ -23,7 +23,7 @@ RSpec.describe Mailgun::Tracking::Signature do
     end
 
     context 'when the signature comparison is unsuccessful' do
-      before { payload.merge!('timestamp' => '') }
+      before { payload['timestamp'] = '' }
 
       it { is_expected.not_to be_valid }
     end

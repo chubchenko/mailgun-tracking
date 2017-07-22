@@ -3,11 +3,11 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
+  gem 'fasterer'
   gem 'overcommit'
   gem 'rake'
   gem 'rubocop'
   gem 'rubocop-rspec'
-  gem 'yard'
 end
 
 group :test do
