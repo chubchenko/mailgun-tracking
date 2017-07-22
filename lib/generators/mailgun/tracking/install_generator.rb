@@ -1,0 +1,18 @@
+module Mailgun
+  module Tracking
+    # Creates the Mailgun Tracking initializer file for Rails apps.
+    #
+    # @example Invokation from terminal
+    #   rails generate mailgun:tracking:install API_KEY ENDPOINT
+    class InstallGenerator < Rails::Generators::Base
+      source_root File.expand_path('../templates', __FILE__)
+
+      argument :api_key, required: false
+      argument :endpoint, required: false
+
+      def copy_initializer_file
+        template('mailgun_tracking.rb.erb', 'config/initializers/mailgun_tracking.rb')
+      end
+    end
+  end
+end
