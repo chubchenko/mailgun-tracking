@@ -4,15 +4,14 @@ gemspec
 
 group :development do
   gem 'overcommit'
-  gem 'rake'
+  gem 'rake', '~> 10.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
-  gem 'yard'
 end
 
 group :test do
-  gem 'codeclimate-test-reporter'
+  gem 'codeclimate-test-reporter', '~> 1.0.0'
   gem 'rack'
-  gem 'rspec'
+  gem 'rspec', '~> 3.6'
   gem 'simplecov', require: false
 end
