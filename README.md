@@ -42,6 +42,22 @@ This command will generate the Mailgun Tracking configuration file under
 
 ## Usage
 
+### Rails
+
+```ruby
+Mailgun::Tracking.configure do |config|
+  config.notifier.subscribe :delivered do |payload|
+    # Do something with the incoming data.
+  end
+
+  config.notifier.all do |payload|
+    # Handle all event types.
+  end
+end
+```
+
+Subscriber objects that respond to `#call`
+
 ```ruby
 class Bounced
   def initialize(logger)
@@ -56,18 +72,7 @@ end
 
 ```ruby
 Mailgun::Tracking.configure do |config|
-  config.api_key = ENV['MAILGUN_API_KEY']
-  config.endpoint = 'new-endpoint'
-
-  config.notifier.subscribe :delivered do |payload|
-    # Do something with the incoming data.
-  end
-
   config.notifier.subscribe :bounced, Bounced.new
-
-  config.notifier.all do |payload|
-    # Handle all event types.
-  end
 end
 ```
 
