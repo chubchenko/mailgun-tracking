@@ -3,15 +3,16 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
+  gem 'fasterer'
   gem 'overcommit'
-  gem 'rake', '~> 10.0'
+  gem 'rake'
   gem 'rubocop'
   gem 'rubocop-rspec'
 end
 
 group :test do
-  gem 'codeclimate-test-reporter', '~> 1.0.0'
+  gem 'codeclimate-test-reporter'
   gem 'rack'
-  gem 'rspec', '~> 3.6'
+  gem 'rspec'
   gem 'simplecov', require: false
 end
