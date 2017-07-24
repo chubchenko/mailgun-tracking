@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-
-require 'bundler/setup'
-require 'mailgun/tracking'
-
-require 'irb'
-IRB.start(__FILE__)

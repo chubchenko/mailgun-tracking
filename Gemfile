@@ -5,6 +5,7 @@ gemspec
 group :development do
   gem 'fasterer'
   gem 'overcommit'
+  gem 'pry'
   gem 'rake'
   gem 'rubocop'
   gem 'rubocop-rspec'
