@@ -2,9 +2,27 @@ require 'spec_helper'
 
 RSpec.describe Mailgun::Tracking do
   describe '.configure' do
-    it 'setup block yields self' do
+    let(:configuration) { instance_double(Mailgun::Tracking::Configuration) }
+    let(:options) do
+      {
+        api_key: 'key-qblubkqnkdn4lfes5oscf57ryllaia42',
+        endpoint: '/mailgun-tracking'
+      }
+    end
+
+    before do
+      allow(configuration).to receive(:configure)
+      allow(Mailgun::Tracking::Configuration).to receive(:instance) { configuration }
+    end
+
+    it do
+      described_class.configure(options)
+      expect(configuration).to have_received(:configure).with(options)
+    end
+
+    it 'setup block yields Mailgun::Tracking::Configuration' do
       described_class.configure do |config|
-        expect(described_class).to eq(config)
+        expect(config).to eq(Mailgun::Tracking::Configuration.instance)
       end
     end
   end

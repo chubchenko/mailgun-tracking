@@ -1,3 +1,4 @@
+require 'mailgun/tracking/configuration'
 require 'mailgun/tracking/exceptions'
 require 'mailgun/tracking/listener'
 require 'mailgun/tracking/middleware'
@@ -11,34 +12,27 @@ require 'mailgun/tracking/railtie' if defined?(Rails)
 module Mailgun
   # Namespace for classes and modules that handle Mailgun Webhooks.
   module Tracking
-    DEFAULT_ENDPOINT = '/mailgun'.freeze
-
-    class << self
-      # Mailgun API public key.
-      #
-      # @return [String]
-      attr_accessor :api_key
-
-      # Mailgun Webhook API endpoint
-      #
-      # @return [String]
-      attr_accessor :endpoint
-
-      # Default way to setup Mailgun Tracking.
-      #
-      # @example
-      #   Mailgun::Tracking.configure do |config|
-      #     config.api_key = ENV['MAILGUN_API_KEY']
-      #     config.endpoint = '/mailgun-tracking'
-      #   end
-      def configure
-        yield(self)
-      end
-    end
-
-    self.endpoint = DEFAULT_ENDPOINT
-
     module_function
+
+    # Default way to setup Mailgun Tracking.
+    #
+    # @example
+    #   Mailgun::Tracking.configure do |config|
+    #     config.api_key = ENV['MAILGUN_API_KEY']
+    #     config.endpoint = '/mailgun-tracking'
+    #   end
+    #
+    # @example
+    #   Mailgun::Tracking.configure(api_key: ENV['MAILGUN_API_KEY'], endpoint: '/mailgun-tracking')
+    #
+    # @param [Hash] options the options hash.
+    # @option options [String] :api_key Mailgun API public key.
+    # @option options [String] :endpoint Mailgun Webhook API endpoint.
+    #
+    # @return [void]
+    def configure(options = {}, &block)
+      Configuration.instance.configure(options, &block)
+    end
 
     # A Notifier instance.
     #
