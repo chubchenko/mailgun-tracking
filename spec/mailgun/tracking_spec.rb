@@ -19,12 +19,6 @@ RSpec.describe Mailgun::Tracking do
       described_class.configure(options)
       expect(configuration).to have_received(:configure).with(options)
     end
-
-    it 'setup block yields Mailgun::Tracking::Configuration' do
-      described_class.configure do |config|
-        expect(config).to eq(Mailgun::Tracking::Configuration.instance)
-      end
-    end
   end
 
   describe '.notifier' do
