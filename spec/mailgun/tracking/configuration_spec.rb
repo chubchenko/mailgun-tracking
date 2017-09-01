@@ -26,16 +26,12 @@ RSpec.describe Mailgun::Tracking::Configuration do
       end
     end
 
-    it do
-      expect { ensure_configuration_via_options }.to change(configuration, :api_key)
-        .to(options[:api_key])
-        .and change(configuration, :endpoint).to(options[:endpoint])
+    def ensure_expect_to_change_state
+      expect { yield }.to change(configuration, :api_key)
+        .to(options[:api_key]).and change(configuration, :endpoint).to(options[:endpoint])
     end
 
-    it do
-      expect { ensure_configuration_via_block }.to change(configuration, :api_key)
-        .to(options[:api_key])
-        .and change(configuration, :endpoint).to(options[:endpoint])
-    end
+    it { ensure_expect_to_change_state { ensure_configuration_via_options } }
+    it { ensure_expect_to_change_state { ensure_configuration_via_block } }
   end
 end
