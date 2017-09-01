@@ -30,7 +30,7 @@ module Mailgun
 
       # @return [Boolean]
       def valid?
-        @signature == OpenSSL::HMAC.hexdigest(digest, Mailgun::Tracking.api_key, data)
+        @signature == OpenSSL::HMAC.hexdigest(digest, Configuration.instance.api_key, data)
       end
 
       private

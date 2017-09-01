@@ -39,7 +39,7 @@ module Mailgun
       # @return [Boolean]
       def mailgun_tracking_request?
         return false unless request.post?
-        return false unless request.path == Mailgun::Tracking.endpoint
+        return false unless request.path == Configuration.instance.endpoint
         true
       end
 
