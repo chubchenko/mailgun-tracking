@@ -4,7 +4,7 @@ require 'mailgun/tracking/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'mailgun-tracking'
-  spec.version       = Mailgun::Tracking::VERSION
+  spec.version       = Mailgun::Tracking::Version
   spec.authors       = ['Artem Chubchenko']
   spec.email         = ['artem.chubchenko@gmail.com']
 
