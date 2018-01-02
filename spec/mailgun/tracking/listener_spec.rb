@@ -28,7 +28,7 @@ RSpec.describe Mailgun::Tracking::Listener do
 
     before do
       allow(subscriber).to receive(:call)
-      allow(subscriber).to receive(:subscribed_to?).with(/delivered/) { true }
+      allow(subscriber).to receive(:subscribed_to?).with(/delivered/).and_return(true)
       allow(Mailgun::Tracking::Subscriber).to receive(:for).with(:delivered, callable) { subscriber }
 
       listener.add_subscriber(:delivered, callable)
