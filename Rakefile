@@ -7,7 +7,7 @@ namespace :spec do
   end
 
   namespace :integration do
-    %i[sinatra].each do |app|
+    %i[sinatra rack].each do |app|
       RSpec::Core::RakeTask.new(app) do |t|
         t.pattern = "spec/integration/#{app}/*_spec.rb"
       end
@@ -18,3 +18,4 @@ end
 task default: 'spec:unit'
 
 # bundle exec appraisal sinatra rake spec:integration:sinatra
+# bundle exec appraisal rack rake spec:integration:rack
