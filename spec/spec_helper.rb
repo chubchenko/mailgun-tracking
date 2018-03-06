@@ -1,4 +1,5 @@
 require 'rack'
+require 'rack/test'
 require 'simplecov'
 require 'bundler/setup'
 require 'mailgun/tracking'
@@ -11,6 +12,7 @@ SimpleCov.start
 
 RSpec.configure do |config|
   config.include(RackHelpers)
+  config.include(Rack::Test::Methods)
 
   config.before do
     Mailgun::Tracking.configure do |c|
