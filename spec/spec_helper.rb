@@ -12,7 +12,7 @@ SimpleCov.start
 
 RSpec.configure do |config|
   config.include(RackHelpers)
-  config.include(Rack::Test::Methods)
+  config.include(Rack::Test::Methods, type: :integration)
 
   config.before do
     Mailgun::Tracking.configure do |c|

@@ -1,15 +1,25 @@
 require 'spec_helper'
-require 'integration/sinatra/dummy'
+require_relative 'dummy'
 
+RSpec.describe 'Sinatra', type: :integration do
+  let(:app) { Dummy }
+  let(:payload) { fixture('delivered.json') }
+  let(:delivered) { instance_double(Delivered) }
 
-RSpec.describe 'Sinatra' do
-  let!(:app) { Dummy }
+  before do
+    Mailgun::Tracking.notifier.subscribe :delivered do |payload|
+      Delivered.new.call(payload)
+    end
 
-  let(:body) do
-    fixture('delivered.json')
+    Mailgun::Tracking.notifier.subscribe :bounced do |payload|
+      Delivered.new.call(payload)
+    end
+
+    allow(delivered).to receive(:call)
+    allow(Delivered).to receive(:new).and_return(delivered)
+
+    post('/mailgun', payload)
   end
 
-  it 'test' do
-    post '/mailgun', body
-  end
+  it { expect(delivered).to have_received(:call).with(payload).once }
 end

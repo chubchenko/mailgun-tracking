@@ -6,3 +6,7 @@ Metrics/LineLength:
 Metrics/BlockLength:
   ExcludedMethods:
     - describe
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/integration/**/*'
