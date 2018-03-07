@@ -1,12 +1,10 @@
-# coding: utf-8
-
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'mailgun/tracking/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'mailgun-tracking'
-  spec.version       = Mailgun::Tracking::VERSION
+  spec.version       = Mailgun::Tracking::Version
   spec.authors       = ['Artem Chubchenko']
   spec.email         = ['artem.chubchenko@gmail.com']
 
@@ -19,5 +17,5 @@ Gem::Specification.new do |spec|
   spec.test_files    = Dir['{spec}/**/*']
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 1.9.3'
+  spec.required_ruby_version = '>= 2.1.0'
 end

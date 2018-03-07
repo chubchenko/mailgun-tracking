@@ -12,8 +12,11 @@ SimpleCov.start
 RSpec.configure do |config|
   config.include(RackHelpers)
 
-  config.before(:each) do
-    Mailgun::Tracking.configure(api_key: 'key-qblubkqnkdn4lfes5oscf57ryllaia42', endpoint: '/mailgun')
+  config.before do
+    Mailgun::Tracking.configure do |c|
+      c.api_key = 'key-qblubkqnkdn4lfes5oscf57ryllaia42'
+      c.endpoint = '/mailgun'
+    end
   end
 
   config.expect_with :rspec do |c|

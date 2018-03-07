@@ -11,6 +11,13 @@ module Mailgun
         @listener ||= listener
       end
 
+      # Returns true if there is  at least one subscriber.
+      #
+      # @return [Boolean]
+      def empty?
+        listener.subscribers.empty?
+      end
+
       # Adds subscriber for the specified event.
       #
       # @param event [Symbol, String] The name of event.

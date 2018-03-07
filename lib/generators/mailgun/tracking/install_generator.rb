@@ -5,7 +5,7 @@ module Mailgun
     # @example Invokation from terminal
     #   rails generate mailgun:tracking:install API_KEY ENDPOINT
     class InstallGenerator < Rails::Generators::Base
-      source_root File.expand_path('../templates', __FILE__)
+      source_root File.expand_path('templates', __dir__)
 
       argument :api_key, required: false
       argument :endpoint, required: false
