@@ -20,24 +20,7 @@ module Mailgun
     #   Mailgun::Tracking.configure do |config|
     #     config.api_key = ENV['MAILGUN_API_KEY']
     #     config.endpoint = '/mailgun-tracking'
-    #   end
     #
-    # @example
-    #   Mailgun::Tracking.configure(api_key: ENV['MAILGUN_API_KEY'], endpoint: '/mailgun-tracking')
-    #
-    # @param [Hash] options the options hash.
-    # @option options [String] :api_key Mailgun API public key.
-    # @option options [String] :endpoint Mailgun Webhook API endpoint.
-    #
-    # @return [void]
-    def configure(options = {}, &block)
-      Configuration.instance.configure(options, &block)
-    end
-
-    # A Notifier instance.
-    #
-    # @example
-    #   Mailgun::Tracking.configure do |config|
     #     config.notifier.subscribe :delivered do |payload|
     #       # Do something with the incoming data.
     #     end
@@ -49,9 +32,30 @@ module Mailgun
     #     end
     #   end
     #
+    # @return [void]
+    def configure
+      yield(self)
+    end
+
+    # A Notifier instance.
+    #
     # @return [Mailgun::Tracking::Notifier]
     def notifier
       @notifier ||= Notifier.new
+    end
+
+    # Delegate other missing methods to configuration.
+    def method_missing(method_name, *arguments, &block)
+      if Configuration.instance.respond_to?(method_name)
+        Configuration.instance.public_send(method_name, *arguments, &block)
+      else
+        super
+      end
+    end
+
+    # Replaces the Object.respond_to?() method.
+    def respond_to_missing?(method_name, include_private = false)
+      Configuration.instance.respond_to?(method_name) || super
     end
   end
 end

@@ -5,6 +5,22 @@ RSpec.describe Mailgun::Tracking::Notifier do
 
   let(:listener) { instance_double(Mailgun::Tracking::Listener) }
 
+  describe '#empty?' do
+    context 'when there is at least one subscriber' do
+      let(:subscriber) { instance_double(Mailgun::Tracking::Subscriber::AllMessages) }
+
+      before { allow(listener).to receive(:subscribers).and_return([subscriber]) }
+
+      it { is_expected.not_to be_empty }
+    end
+
+    context 'when there are no subscribers' do
+      before { allow(listener).to receive(:subscribers).and_return([]) }
+
+      it { is_expected.to be_empty }
+    end
+  end
+
   describe '#subscribe' do
     let(:callable) { proc {} }
 

@@ -1,29 +1,31 @@
 require 'spec_helper'
 
 RSpec.describe Mailgun::Tracking do
+  it { is_expected.to respond_to(:api_key) }
+  it { is_expected.to respond_to(:endpoint) }
+  it { is_expected.to respond_to(:api_key=) }
+  it { is_expected.to respond_to(:endpoint=) }
+
   describe '.configure' do
-    let(:configuration) { instance_double(Mailgun::Tracking::Configuration) }
-    let(:options) do
-      {
-        api_key: 'key-qblubkqnkdn4lfes5oscf57ryllaia42',
-        endpoint: '/mailgun-tracking'
-      }
-    end
-
     before do
-      allow(configuration).to receive(:configure)
-      allow(Mailgun::Tracking::Configuration).to receive(:instance) { configuration }
+      described_class.configure do |config|
+        config.api_key = 'dab36017-478a-4373-9378-7070eb5968b5'
+        config.endpoint = '/mailgun-tracking'
+
+        config.notifier.all(proc {})
+      end
     end
 
-    it do
-      described_class.configure(options)
-      expect(configuration).to have_received(:configure).with(options)
+    it 'setups api key' do
+      expect(described_class.api_key).to eq('dab36017-478a-4373-9378-7070eb5968b5')
     end
-  end
 
-  describe '.notifier' do
-    it 'returns an instance of Mailgun::Tracking::Notifier' do
-      expect(described_class.notifier).to be_instance_of(Mailgun::Tracking::Notifier)
+    it 'setups endpoint' do
+      expect(described_class.endpoint).to eq('/mailgun-tracking')
+    end
+
+    it 'adds subscribers' do
+      expect(described_class.notifier).not_to be_empty
     end
   end
 end
