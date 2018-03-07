@@ -24,7 +24,7 @@ module Mailgun
       #
       # @return [Integer]
       def patch
-        3
+        4
       end
 
       # Returns a hash representation of version.
