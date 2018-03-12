@@ -13,6 +13,10 @@ rvm:
   - 2.5.0
   - ruby-head
 
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+
 gemfile:
   - gemfiles/sinatra.gemfile
   - gemfiles/rack.gemfile
