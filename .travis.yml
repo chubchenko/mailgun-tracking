@@ -7,7 +7,6 @@ cache:
 language: ruby
 
 rvm:
-  - 2.1.10
   - 2.2.9
   - 2.3.6
   - 2.4.3
@@ -18,6 +17,8 @@ gemfile:
   - gemfiles/sinatra.gemfile
   - gemfiles/rack.gemfile
   - gemfiles/rails_4.2.gemfile
+  - gemfiles/rails_5.0.gemfile
+  - gemfiles/rails_5.1.gemfile
 
 after_success:
   - bundle exec codeclimate-test-reporter
