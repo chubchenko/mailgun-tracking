@@ -16,9 +16,3 @@ namespace :spec do
 end
 
 task default: 'spec:unit'
-
-# bundle exec appraisal rack rake spec:integration:rack
-# bundle exec appraisal rails-4.2 rake spec:integration:rails
-# bundle exec appraisal rails-5.0 rake spec:integration:rails
-# bundle exec appraisal rails-5.1 rake spec:integration:rails
-# bundle exec appraisal sinatra rake spec:integration:sinatra

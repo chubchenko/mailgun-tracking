@@ -13,16 +13,24 @@ rvm:
   - 2.5.0
   - ruby-head
 
+before_install:
+  - gem install bundler
+
+install:
+  - bundle install
+  - bundle exec appraisal install
+
 matrix:
   allow_failures:
     - rvm: ruby-head
 
-gemfile:
-  - gemfiles/sinatra.gemfile
-  - gemfiles/rack.gemfile
-  - gemfiles/rails_4.2.gemfile
-  - gemfiles/rails_5.0.gemfile
-  - gemfiles/rails_5.1.gemfile
+script:
+  - bundle exec appraisal rack rake spec:integration:rack
+  - bundle exec appraisal rails-4.2 rake spec:integration:rails
+  - bundle exec appraisal rails-5.0 rake spec:integration:rails
+  - bundle exec appraisal rails-5.1 rake spec:integration:rails
+  - bundle exec appraisal sinatra rake spec:integration:sinatra
+  - bundle exec rake spec:unit
 
 after_success:
   - bundle exec codeclimate-test-reporter

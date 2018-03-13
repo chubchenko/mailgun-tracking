@@ -20,9 +20,20 @@ RSpec.shared_examples :acts_as_rack do
     Mailgun::Tracking.notifier.all do |payload|
       Delivered.new.call(payload)
     end
-
-    post('/mailgun', payload)
   end
 
-  it { expect(delivered).to have_received(:call).with(payload).twice }
+  it do
+    post('/mailgun', payload)
+    expect(delivered).to have_received(:call).with(payload).twice
+  end
+
+  # context 'when the signature comparison is unsuccessful' do
+  #   before { payload['timestamp'] = '' }
+
+  #   xit do
+  #     expect do
+  #       post('/mailgun', payload)
+  #     end.to raise_error(Mailgun::Tracking::InvalidSignature)
+  #   end
+  # end
 end
