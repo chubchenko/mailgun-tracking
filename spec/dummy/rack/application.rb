@@ -4,7 +4,7 @@ module Dummy
 
     map '/' do
       run(
-        proc do |_env|
+        proc do
           [200, { 'Content-Type' => 'text/plain' }, ['^_^']]
         end
       )

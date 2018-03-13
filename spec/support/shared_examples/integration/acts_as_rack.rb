@@ -27,13 +27,13 @@ RSpec.shared_examples :acts_as_rack do
     expect(delivered).to have_received(:call).with(payload).twice
   end
 
-  # context 'when the signature comparison is unsuccessful' do
-  #   before { payload['timestamp'] = '' }
+  context 'when the signature comparison is unsuccessful' do
+    before { payload['timestamp'] = '' }
 
-  #   xit do
-  #     expect do
-  #       post('/mailgun', payload)
-  #     end.to raise_error(Mailgun::Tracking::InvalidSignature)
-  #   end
-  # end
+    it do
+      post('/mailgun', payload)
+
+      expect(last_response).to be_bad_request
+    end
+  end
 end

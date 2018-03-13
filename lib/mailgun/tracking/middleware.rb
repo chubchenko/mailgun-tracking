@@ -2,6 +2,8 @@ module Mailgun
   module Tracking
     # Rack-based middleware to handle event notifications.
     class Middleware
+      BAD_REQUEST = [400, {}, ['Bad request']].freeze
+
       # Initializes a new Middleware object.
       #
       # @param app the next Rack middleware in the stack.
@@ -18,8 +20,12 @@ module Mailgun
         @env = env
 
         if mailgun_tracking_request?
-          Mailgun::Tracking.notifier.broadcast(request.params.fetch('event'), request.params)
-          null_response
+          begin
+            Mailgun::Tracking.notifier.broadcast(request.params.fetch('event'), request.params)
+            null_response
+          rescue InvalidSignature
+            BAD_REQUEST
+          end
         else
           @app.call(env)
         end
