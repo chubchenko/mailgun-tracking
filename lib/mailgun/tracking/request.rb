@@ -9,6 +9,11 @@ module Mailgun
         return false unless post?
         path == Configuration.instance.endpoint
       end
+
+      # @return [Mailgun::Tracking::Payload]
+      def payload
+        @payload ||= Payload.new(params)
+      end
     end
   end
 end
