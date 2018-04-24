@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Mailgun::Tracking::Subscriber::Evented do
   subject(:subscriber) { described_class.new('delivered', callable) }
 
-  it_behaves_like :subscriber
+  it_behaves_like 'subscriber'
 
   describe '#subscribed_to?' do
     let(:callable) { proc {} }
