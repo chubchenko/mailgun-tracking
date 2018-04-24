@@ -23,9 +23,9 @@ module Mailgun
       #
       # @return [Mailgun::Tracking::Signature]
       def initialize(payload)
-        @token = payload.fetch('token')
-        @timestamp = payload.fetch('timestamp')
-        @signature = payload.fetch('signature')
+        @token = payload['token']
+        @timestamp = payload['timestamp']
+        @signature = payload['signature']
       end
 
       # @return [Boolean]
