@@ -17,14 +17,14 @@ module Mailgun
       #
       # @return [Integer]
       def minor
-        2
+        3
       end
 
       # Patch version.
       #
       # @return [Integer]
       def patch
-        4
+        0
       end
 
       # Returns a hash representation of version.
