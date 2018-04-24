@@ -33,7 +33,7 @@ module Mailgun
       end
 
       def handle_event
-        Mailgun::Tracking.notifier.broadcast(@request.params.fetch('event'), @request.params)
+        Mailgun::Tracking.notifier.broadcast(@request.params.fetch('event'), @request.payload)
         null_response
       rescue InvalidSignature
         bad_request

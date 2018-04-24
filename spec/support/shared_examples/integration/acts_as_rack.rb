@@ -24,7 +24,7 @@ RSpec.shared_examples 'acts as rack' do
 
   it do
     post('/mailgun', payload)
-    expect(delivered).to have_received(:call).with(payload).twice
+    expect(delivered).to have_received(:call).with(instance_of(Mailgun::Tracking::Payload)).twice
   end
 
   context 'when the signature comparison is unsuccessful' do
@@ -32,7 +32,6 @@ RSpec.shared_examples 'acts as rack' do
 
     it do
       post('/mailgun', payload)
-
       expect(last_response).to be_bad_request
     end
   end

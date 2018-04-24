@@ -7,8 +7,10 @@ RSpec.describe Mailgun::Tracking::Middleware do
   let(:notifier) { instance_double(Mailgun::Tracking::Notifier) }
   let(:request) { instance_double(Mailgun::Tracking::Request) }
   let(:env) { env_for('http://localhost:3000') }
+  let(:payload) { instance_double(Mailgun::Tracking::Payload) }
 
   before do
+    allow(request).to receive(:payload).and_return(payload)
     allow(Mailgun::Tracking).to receive(:notifier).and_return(notifier)
     allow(Mailgun::Tracking::Request).to receive(:new).with(env).and_return(request)
   end
@@ -28,12 +30,12 @@ RSpec.describe Mailgun::Tracking::Middleware do
     end
 
     context 'when request is respond to the specified URL and the signature comparison is unsuccessful' do
-      let(:payload) { fixture('delivered.json') }
+      let(:params) { fixture('delivered.json') }
 
       before do
         allow(notifier).to receive(:broadcast).and_raise(Mailgun::Tracking::InvalidSignature)
         allow(request).to receive(:mailgun_tracking?).and_return(true)
-        allow(request).to receive(:params).and_return(payload)
+        allow(request).to receive(:params).and_return(params)
       end
 
       it { expect(rack.call(env)).to include(400) }
@@ -44,11 +46,11 @@ RSpec.describe Mailgun::Tracking::Middleware do
     end
 
     context 'when request is respond to the specified URL and the signature comparison is successful' do
-      let(:payload) { fixture('delivered.json') }
+      let(:params) { fixture('delivered.json') }
 
       before do
         allow(request).to receive(:mailgun_tracking?).and_return(true)
-        allow(request).to receive(:params).and_return(payload)
+        allow(request).to receive(:params).and_return(params)
         allow(notifier).to receive(:broadcast)
       end
 
