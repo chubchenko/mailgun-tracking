@@ -1,4 +1,4 @@
-RSpec.shared_examples :subscriber do
+RSpec.shared_examples 'subscriber' do
   describe '#call' do
     let(:callable) { proc {} }
     let(:payload) { fixture('delivered.json') }

@@ -1,4 +1,4 @@
-RSpec.shared_examples :acts_as_rack do
+RSpec.shared_examples 'acts as rack' do
   class Delivered
     def call(payload); end
   end

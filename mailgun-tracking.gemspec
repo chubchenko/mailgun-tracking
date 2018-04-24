@@ -20,16 +20,12 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.2.0'
 
   spec.add_development_dependency 'appraisal', '~> 2.2'
-  spec.add_development_dependency 'rack-test'
-
-  spec.add_development_dependency 'fasterer'
-  spec.add_development_dependency 'overcommit'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'rubocop-rspec'
-
-  spec.add_development_dependency 'codeclimate-test-reporter'
-  spec.add_development_dependency 'rack'
-  spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'bundler', '~> 1.16'
+  spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0', '>= 1.0.8'
+  spec.add_development_dependency 'rack-test', '~> 0'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec', '~> 3.7'
+  spec.add_development_dependency 'rubocop', '~> 0.54.0'
+  spec.add_development_dependency 'rubocop-rspec', '~> 1.24'
+  spec.add_development_dependency 'simplecov', '~> 0.12.0'
 end
