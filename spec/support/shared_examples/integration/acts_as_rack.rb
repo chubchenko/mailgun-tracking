@@ -1,8 +1,8 @@
-RSpec.shared_examples 'acts as rack' do
-  class Delivered
-    def call(payload); end
-  end
+class Delivered
+  def call(payload); end
+end
 
+RSpec.shared_examples 'acts as rack' do
   let(:app) { Dummy::Application }
   let(:payload) { fixture('delivered.json') }
   let(:delivered) { instance_double(Delivered) }
@@ -17,9 +17,7 @@ RSpec.shared_examples 'acts as rack' do
       Delivered.new.call(payload)
     end
 
-    Mailgun::Tracking.notifier.all do |payload|
-      Delivered.new.call(payload)
-    end
+    Mailgun::Tracking.notifier.all(Delivered.new)
   end
 
   it do
