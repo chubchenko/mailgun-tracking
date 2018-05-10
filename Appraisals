@@ -21,6 +21,8 @@ appraise 'rails-5.2' do
   gem 'rails', '~> 5.2'
 end
 
-appraise 'rails-head' do
-  gem 'rails', github: 'rails'
+if RUBY_VERSION >= '2.4.1'
+  appraise 'rails-head' do
+    gem 'rails', github: 'rails'
+  end
 end
