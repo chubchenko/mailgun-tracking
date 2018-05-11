@@ -1,4 +1,4 @@
-require 'sinatra'
+require 'sinatra/base'
 
 module Dummy
   class Application < Sinatra::Base

@@ -1,0 +1,138 @@
+version: 2
+references:
+  repo_restore_cache: &repo_restore_cache
+    restore_cache:
+      keys:
+        - repo-{{ .Environment.CIRCLE_SHA1 }}
+  repo_save_cache: &repo_save_cache
+    save_cache:
+      key: repo-{{ .Environment.CIRCLE_SHA1 }}-{{ epoch }}
+      paths:
+        - ~/mailgun-tracking
+  bundle_install: &bundle_install
+    run:
+      name: Install Bundler dependencies
+      command: bundle install --path ~/mailgun-tracking/vendor/bundle --jobs 15
+  appraisal_install: &appraisal_install
+    run:
+      name: Install Appraisal dependencies
+      command: bundle exec appraisal install --jobs 15
+  unit: &unit
+    run:
+      name: Run unit tests
+      command: bundle exec rake spec:unit
+  rails42: &rails42
+    run:
+      name: Test Rails 4.2
+      command: bundle exec appraisal rails-4.2 rake spec:integration:rails
+  rails41: &rails50
+    run:
+      name: Test Rails 5.0
+      command: bundle exec appraisal rails-5.0 rake spec:integration:rails
+  rails51: &rails51
+    run:
+      name: Test Rails 5.1
+      command: bundle exec appraisal rails-5.1 rake spec:integration:rails
+  rails51: &rails52
+    run:
+      name: Test Rails 5.2
+      command: bundle exec appraisal rails-5.2 rake spec:integration:rails
+  rails_head: &rails_head
+    run:
+      name: Test Rails Head
+      command: bundle exec appraisal rails-head rake spec:integration:rails
+  sinatra: &sinatra
+    run:
+      name: Test Sinatra
+      command: bundle exec appraisal sinatra rake spec:integration:sinatra
+  rack: &rack
+    run:
+      name: Test Rack
+      command: bundle exec appraisal rack rake spec:integration:rack
+jobs:
+  lint:
+    docker:
+      - image: circleci/ruby:2.5
+    working_directory: ~/mailgun-tracking
+    steps:
+      - checkout
+      - <<: *repo_save_cache
+      - <<: *bundle_install
+      - run:
+          name: Run RuboCop linting
+          command: bundle exec rubocop --parallel
+  "ruby-2.2":
+    docker:
+      - image: circleci/ruby:2.2.9
+    working_directory: ~/mailgun-tracking
+    steps:
+      - <<: *repo_restore_cache
+      - <<: *bundle_install
+      - <<: *appraisal_install
+      - <<: *unit
+      - <<: *rails42
+      - <<: *rails51
+      - <<: *rails52
+      - <<: *sinatra
+      - <<: *rack
+  "ruby-2.3":
+    docker:
+      - image: circleci/ruby:2.3
+    working_directory: ~/mailgun-tracking
+    steps:
+      - <<: *repo_restore_cache
+      - <<: *bundle_install
+      - <<: *appraisal_install
+      - <<: *unit
+      - <<: *rails42
+      - <<: *rails51
+      - <<: *rails52
+      - <<: *sinatra
+      - <<: *rack
+  "ruby-2.4":
+    docker:
+      - image: circleci/ruby:2.4
+    working_directory: ~/mailgun-tracking
+    steps:
+      - <<: *repo_restore_cache
+      - <<: *bundle_install
+      - <<: *appraisal_install
+      - <<: *unit
+      - <<: *rails42
+      - <<: *rails51
+      - <<: *rails52
+      - <<: *rails_head
+      - <<: *sinatra
+      - <<: *rack
+  "ruby-2.5":
+    docker:
+      - image: circleci/ruby:2.5
+    working_directory: ~/mailgun-tracking
+    steps:
+      - <<: *repo_restore_cache
+      - <<: *bundle_install
+      - <<: *appraisal_install
+      - <<: *unit
+      - <<: *rails42
+      - <<: *rails51
+      - <<: *rails52
+      - <<: *rails_head
+      - <<: *sinatra
+      - <<: *rack
+workflows:
+  version: 2
+  build:
+    jobs:
+      - lint
+      - "ruby-2.2":
+          requires:
+            - lint
+      - "ruby-2.3":
+          requires:
+            - lint
+      - "ruby-2.4":
+          requires:
+            - lint
+      - "ruby-2.5":
+          requires:
+            - lint
