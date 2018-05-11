@@ -1,7 +1,7 @@
 # Mailgun Tracking
 
 [![Gem Version Badge](https://badge.fury.io/rb/mailgun-tracking.svg)](https://badge.fury.io/rb/mailgun-tracking)
-[![Travis CI Badge](https://travis-ci.org/chubchenko/mailgun-tracking.svg?branch=master)](https://travis-ci.org/chubchenko/mailgun-tracking)
+[![CircleCI Badge](https://circleci.com/gh/chubchenko/mailgun-tracking.svg?style=svg)](https://circleci.com/gh/chubchenko/mailgun-tracking)
 [![Dependency Status Badge](https://gemnasium.com/chubchenko/mailgun-tracking.svg)](https://gemnasium.com/chubchenko/mailgun-tracking)
 [![Code Climate Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/gpa.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking)
 [![Test Coverage Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/coverage.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking/coverage)
