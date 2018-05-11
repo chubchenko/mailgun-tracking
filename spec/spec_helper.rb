@@ -1,16 +1,12 @@
-require 'rack'
-require 'simplecov'
+require 'rack/test'
 require 'bundler/setup'
 require 'mailgun/tracking'
 
-require_relative 'support/fixture'
-require_relative 'support/rack_helpers'
-require_relative 'support/shared_examples/subscriber'
-
-SimpleCov.start
+Dir.glob(File.expand_path('support/**/*.rb', __dir__), &method(:require))
 
 RSpec.configure do |config|
   config.include(RackHelpers)
+  config.include(Rack::Test::Methods, type: :integration)
 
   config.before do
     Mailgun::Tracking.configure do |c|

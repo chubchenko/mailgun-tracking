@@ -3,10 +3,13 @@ require 'mailgun/tracking/exceptions'
 require 'mailgun/tracking/listener'
 require 'mailgun/tracking/middleware'
 require 'mailgun/tracking/notifier'
+require 'mailgun/tracking/payload'
 require 'mailgun/tracking/signature'
 require 'mailgun/tracking/subscriber'
+require 'mailgun/tracking/util'
 require 'mailgun/tracking/version'
 require 'mailgun/tracking/railtie' if defined?(Rails)
+require 'mailgun/tracking/request'
 
 # Module for interacting with the Mailgun.
 module Mailgun

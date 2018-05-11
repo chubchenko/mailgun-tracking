@@ -1,8 +1,15 @@
 require: rubocop-rspec
 
+AllCops:
+  TargetRubyVersion: 2.2
+
 Metrics/LineLength:
   Max: 120
 
 Metrics/BlockLength:
   ExcludedMethods:
     - describe
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/integration/**/*'

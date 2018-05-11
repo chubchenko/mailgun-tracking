@@ -1,7 +1,7 @@
 # Mailgun Tracking
 
 [![Gem Version Badge](https://badge.fury.io/rb/mailgun-tracking.svg)](https://badge.fury.io/rb/mailgun-tracking)
-[![Travis CI Badge](https://travis-ci.org/chubchenko/mailgun-tracking.svg?branch=master)](https://travis-ci.org/chubchenko/mailgun-tracking)
+[![CircleCI Badge](https://circleci.com/gh/chubchenko/mailgun-tracking.svg?style=svg)](https://circleci.com/gh/chubchenko/mailgun-tracking)
 [![Dependency Status Badge](https://gemnasium.com/chubchenko/mailgun-tracking.svg)](https://gemnasium.com/chubchenko/mailgun-tracking)
 [![Code Climate Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/gpa.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking)
 [![Test Coverage Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/coverage.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking/coverage)
@@ -72,8 +72,34 @@ end
 
 ```ruby
 Mailgun::Tracking.configure do |config|
-  config.notifier.subscribe :bounced, Bounced.new
+  config.notifier.subscribe(:bounced, Bounced.new)
 end
+```
+
+### Sinatra
+
+To use Mailgun Tracking with Sinatra, simply `require` the gem, configure it and `use` our Rack middleware.
+
+```ruby
+require 'sinatra/base'
+require 'mailgun/tracking'
+
+Mailgun::Tracking.configure do |config|
+  config.api_key = 'key-qblubkqnkdn4lfes5oscf57ryllaia42'
+  config.endpoint = '/mailgun'
+
+  config.notifier.subscribe(:bounced, Bounced.new)
+
+  config.notifier.all do |payload|
+    # Handle all event types.
+  end
+end
+
+class Application < Sinatra::Base
+  use Mailgun::Tracking::Middleware
+end
+
+run Application.run!
 ```
 
 ## License
