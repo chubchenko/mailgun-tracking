@@ -72,8 +72,34 @@ end
 
 ```ruby
 Mailgun::Tracking.configure do |config|
-  config.notifier.subscribe :bounced, Bounced.new
+  config.notifier.subscribe(:bounced, Bounced.new)
 end
+```
+
+### Sinatra
+
+To use Mailgun Tracking with Sinatra, simply `require` the gem, configure it and `use` our Rack middleware.
+
+```ruby
+require 'sinatra/base'
+require 'mailgun/tracking'
+
+Mailgun::Tracking.configure do |config|
+  config.api_key = 'key-qblubkqnkdn4lfes5oscf57ryllaia42'
+  config.endpoint = '/mailgun'
+
+  config.notifier.subscribe(:bounced, Bounced.new)
+
+  config.notifier.all do |payload|
+    # Handle all event types.
+  end
+end
+
+class Application < Sinatra::Base
+  use Mailgun::Tracking::Middleware
+end
+
+run Application.run!
 ```
 
 ## License
