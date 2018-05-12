@@ -61,6 +61,25 @@ jobs:
       - run:
           name: Run RuboCop linting
           command: bundle exec rubocop --parallel
+  "code-climate":
+    docker:
+      - image: circleci/ruby:2.5
+    working_directory: ~/mailgun-tracking
+    steps:
+      - checkout
+      - <<: *repo_save_cache
+      - <<: *bundle_install
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+          name: Run specs
+          command: |
+            ./cc-test-reporter before-build
+            rake coverage
+            ./cc-test-reporter after-build --exit-code $?
   "ruby-2.2":
     docker:
       - image: circleci/ruby:2.2.9
@@ -124,15 +143,20 @@ workflows:
   build:
     jobs:
       - lint
+      - "code-climate"
       - "ruby-2.2":
           requires:
             - lint
+            - "code-climate"
       - "ruby-2.3":
           requires:
             - lint
+            - "code-climate"
       - "ruby-2.4":
           requires:
             - lint
+            - "code-climate"
       - "ruby-2.5":
           requires:
             - lint
+            - "code-climate"

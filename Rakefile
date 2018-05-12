@@ -15,4 +15,10 @@ namespace :spec do
   end
 end
 
+desc 'Run RSpec with code coverage'
+task :coverage do
+  ENV['COVERAGE'] = 'true'
+  Rake::Task['spec:unit'].execute
+end
+
 task default: 'spec:unit'

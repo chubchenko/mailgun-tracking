@@ -1,5 +1,7 @@
-require 'simplecov'
+if ENV['COVERAGE'] == 'true'
+  require 'simplecov'
 
-SimpleCov.start do
-  add_filter('integration')
+  SimpleCov.start do
+    add_filter('integration')
+  end
 end
