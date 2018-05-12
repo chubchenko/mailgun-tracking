@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Mailgun::Tracking::Util do
   describe '.normalize' do
     context 'when the keys of the object are strings' do

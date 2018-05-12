@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Mailgun::Tracking::Payload do
   subject(:payload) { described_class.new(options) }
 

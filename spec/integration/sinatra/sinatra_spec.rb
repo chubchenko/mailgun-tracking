@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'dummy/sinatra/application'
 
 RSpec.describe 'Sinatra', type: :integration do

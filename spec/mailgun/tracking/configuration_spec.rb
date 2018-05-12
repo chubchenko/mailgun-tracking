@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Mailgun::Tracking::Configuration do
   subject(:configuration) { described_class.instance }
 

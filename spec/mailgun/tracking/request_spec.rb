@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Mailgun::Tracking::Request do
   subject(:request) { described_class.new(env) }
 

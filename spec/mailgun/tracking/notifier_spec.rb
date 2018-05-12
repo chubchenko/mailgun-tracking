@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Mailgun::Tracking::Notifier do
   subject(:notifier) { described_class.new(listener) }
 
