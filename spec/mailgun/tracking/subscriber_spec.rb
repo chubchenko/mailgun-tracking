@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Mailgun::Tracking::Subscriber do
   describe '.for' do
     let(:callable) { proc {} }

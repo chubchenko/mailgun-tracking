@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'dummy/rack/application'
 
 RSpec.describe 'Rack', type: :integration do

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Mailgun::Tracking::Subscriber::AllMessages do
   subject(:subscriber) { described_class.new(callable) }
 

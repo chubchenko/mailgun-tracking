@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Mailgun::Tracking::Middleware do
   subject(:rack) { described_class.new(app) }
 

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Mailgun::Tracking::Version do
   before do
     allow(described_class).to receive(:major).and_return(0)
