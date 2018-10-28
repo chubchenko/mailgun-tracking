@@ -78,7 +78,7 @@ jobs:
           name: Run specs
           command: |
             ./cc-test-reporter before-build
-            rake coverage
+            bundle exec rake coverage
             ./cc-test-reporter after-build --exit-code $?
   "ruby-2.2":
     docker:
@@ -138,6 +138,21 @@ jobs:
       - <<: *rails_head
       - <<: *sinatra
       - <<: *rack
+  "ruby-2.6":
+    docker:
+      - image: circleci/ruby:2.6-rc
+    working_directory: ~/mailgun-tracking
+    steps:
+      - <<: *repo_restore_cache
+      - <<: *bundle_install
+      - <<: *appraisal_install
+      - <<: *unit
+      - <<: *rails42
+      - <<: *rails51
+      - <<: *rails52
+      - <<: *rails_head
+      - <<: *sinatra
+      - <<: *rack
 workflows:
   version: 2
   build:
@@ -157,6 +172,10 @@ workflows:
             - lint
             - "code-climate"
       - "ruby-2.5":
+          requires:
+            - lint
+            - "code-climate"
+      - "ruby-2.6":
           requires:
             - lint
             - "code-climate"
