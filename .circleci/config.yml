@@ -179,3 +179,34 @@ workflows:
           requires:
             - lint
             - "code-climate"
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - lint
+      - "code-climate"
+      - "ruby-2.2":
+          requires:
+            - lint
+            - "code-climate"
+      - "ruby-2.3":
+          requires:
+            - lint
+            - "code-climate"
+      - "ruby-2.4":
+          requires:
+            - lint
+            - "code-climate"
+      - "ruby-2.5":
+          requires:
+            - lint
+            - "code-climate"
+      - "ruby-2.6":
+          requires:
+            - lint
+            - "code-climate"
