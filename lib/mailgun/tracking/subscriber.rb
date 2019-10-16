@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'mailgun/tracking/subscriber/all_messages'
 require 'mailgun/tracking/subscriber/evented'
 

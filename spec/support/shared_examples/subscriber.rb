@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples 'subscriber' do
   describe '#call' do
     let(:callable) { proc {} }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     # Rack-based middleware to handle event notifications.
@@ -17,6 +19,7 @@ module Mailgun
       def call(env)
         @request = Request.new(env)
         return @app.call(env) unless @request.mailgun_tracking?
+
         handle_event
       end
 

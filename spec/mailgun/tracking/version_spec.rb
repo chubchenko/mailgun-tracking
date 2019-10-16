@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mailgun::Tracking::Version do
   before do
     allow(described_class).to receive(:major).and_return(0)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mailgun::Tracking::Payload do
   subject(:payload) { described_class.new(options) }
 

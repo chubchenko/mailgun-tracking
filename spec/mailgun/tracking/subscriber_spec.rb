@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mailgun::Tracking::Subscriber do
   describe '.for' do
     let(:callable) { proc {} }

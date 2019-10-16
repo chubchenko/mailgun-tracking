@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mailgun::Tracking::Signature do
   subject(:signature) { described_class.new(payload) }
 

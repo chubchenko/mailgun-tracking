@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Dummy
   Application = Rack::Builder.new do
     use Mailgun::Tracking::Middleware

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     # Provides a convenient interface to a Rack environment.
@@ -7,6 +9,7 @@ module Mailgun
       # @return [Boolean]
       def mailgun_tracking?
         return false unless post?
+
         path == Configuration.instance.endpoint
       end
 

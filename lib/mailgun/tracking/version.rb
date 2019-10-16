@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     # This module holds the Mailgun Tracking version information.

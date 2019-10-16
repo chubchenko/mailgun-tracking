@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     # Represents a mechanism for event listeners to subscribe to events and for event broadcasts.

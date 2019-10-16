@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mailgun::Tracking::Configuration do
   subject(:configuration) { described_class.instance }
 
