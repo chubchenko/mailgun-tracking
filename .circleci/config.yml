@@ -1,138 +1,264 @@
-version: 2
-references:
-  repo_restore_cache: &repo_restore_cache
-    restore_cache:
-      keys:
-        - repo-{{ .Environment.CIRCLE_SHA1 }}
-  repo_save_cache: &repo_save_cache
-    save_cache:
-      key: repo-{{ .Environment.CIRCLE_SHA1 }}-{{ epoch }}
-      paths:
-        - ~/mailgun-tracking
-  bundle_install: &bundle_install
-    run:
-      name: Install Bundler dependencies
-      command: bundle install --path ~/mailgun-tracking/vendor/bundle --jobs 15
-  appraisal_install: &appraisal_install
-    run:
-      name: Install Appraisal dependencies
-      command: bundle exec appraisal install --jobs 15
-  unit: &unit
-    run:
-      name: Run unit tests
-      command: bundle exec rake spec:unit
-  rails42: &rails42
-    run:
-      name: Test Rails 4.2
-      command: bundle exec appraisal rails-4.2 rake spec:integration:rails
-  rails41: &rails50
-    run:
-      name: Test Rails 5.0
-      command: bundle exec appraisal rails-5.0 rake spec:integration:rails
-  rails51: &rails51
-    run:
-      name: Test Rails 5.1
-      command: bundle exec appraisal rails-5.1 rake spec:integration:rails
-  rails51: &rails52
-    run:
-      name: Test Rails 5.2
-      command: bundle exec appraisal rails-5.2 rake spec:integration:rails
-  rails_head: &rails_head
-    run:
-      name: Test Rails Head
-      command: bundle exec appraisal rails-head rake spec:integration:rails
-  sinatra: &sinatra
-    run:
-      name: Test Sinatra
-      command: bundle exec appraisal sinatra rake spec:integration:sinatra
-  rack: &rack
-    run:
-      name: Test Rack
-      command: bundle exec appraisal rack rake spec:integration:rack
-jobs:
-  lint:
-    docker:
-      - image: circleci/ruby:2.5
-    working_directory: ~/mailgun-tracking
+version: 2.1
+
+commands:
+  appraisal-install:
+    description: Resolve and install dependencies for each appraisal
     steps:
-      - checkout
-      - <<: *repo_save_cache
-      - <<: *bundle_install
+      - run: bundle install && bundle exec appraisal install
+
+  appraisal:
+    description: Run a command in a single appraisal
+    parameters:
+      appraisal-name:
+        description: Appraisal name
+        type: string
+      external-command:
+        description: External command
+        type: string
+    steps:
+      - run: bundle exec appraisal << parameters.appraisal-name >> << parameters.external-command >>
+
+  appraisal-matrix:
+    description: Matrix expansion
+    parameters:
+      rails-4-2:
+        type: boolean
+        default: true
+      rails-5-0:
+        type: boolean
+        default: true
+      rails-5-1:
+        type: boolean
+        default: true
+      rails-5-2:
+        type: boolean
+        default: true
+      rails-6-0:
+        type: boolean
+        default: true
+      rails-head:
+        type: boolean
+        default: true
+      sinatra:
+        type: boolean
+        default: true
+      rack:
+        type: boolean
+        default: true
+    steps:
+      - when:
+          condition: << parameters.rails-4-2 >>
+          steps:
+              - appraisal:
+                  appraisal-name: 'rails-4-2'
+                  external-command: 'rake spec:integration:rails'
+      - when:
+          condition: << parameters.rails-5-0 >>
+          steps:
+            - appraisal:
+                appraisal-name: 'rails-5-0'
+                external-command: 'rake spec:integration:rails'
+      - when:
+          condition: << parameters.rails-5-1 >>
+          steps:
+            - appraisal:
+                appraisal-name: 'rails-5-1'
+                external-command: 'rake spec:integration:rails'
+      - when:
+          condition: << parameters.rails-5-2 >>
+          steps:
+            - appraisal:
+                appraisal-name: 'rails-5-2'
+                external-command: 'rake spec:integration:rails'
+      - when:
+          condition: << parameters.rails-6-0 >>
+          steps:
+            - appraisal:
+                appraisal-name: 'rails-6-0'
+                external-command: 'rake spec:integration:rails'
+      - when:
+          condition: << parameters.rails-head >>
+          steps:
+            - appraisal:
+                appraisal-name: 'rails-head'
+                external-command: 'rake spec:integration:rails'
+      - when:
+          condition: << parameters.sinatra >>
+          steps:
+            - appraisal:
+                appraisal-name: 'sinatra'
+                external-command: 'rake spec:integration:sinatra'
+      - when:
+          condition: << parameters.rack >>
+          steps:
+            - appraisal:
+                appraisal-name: 'rack'
+                external-command: 'rake spec:integration:rack'
+
+  cc-setup-coverage:
+    description: Setup Code Climate
+    parameters:
+      url:
+        description: Pre-built binary URL
+        default: https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+        type: string
+      version:
+        default: latest
+        type: string
+    steps:
+      - restore_cache:
+          key: cc-setup-<< parameters.version >>
       - run:
-          name: Run RuboCop linting
+          name: Setup coverage
+          command: |
+            if [[ $(command -v cc-test-reporter) == "" ]]; then
+              mkdir -p tmp/
+              sudo curl -s -o ./tmp/cc-test-reporter -L << parameters.url >>
+              sudo chmod +x ./tmp/cc-test-reporter
+            else
+              echo "Already installed."
+            fi
+      - save_cache:
+          key: cc-setup-<< parameters.version >>
+          paths:
+            - ./tmp/cc-test-reporter
+
+executors:
+  default:
+    description: The official CircleCI Ruby Docker image
+    parameters:
+      tag:
+        description: The circleci/ruby Docker image version tag
+        type: string
+        default: latest
+    docker:
+      - image: circleci/ruby:<< parameters.tag >>
+    environment:
+      - BUNDLE_JOBS: 4
+      - BUNDLE_PATH: vendor/bundle
+      - BUNDLE_RETRY: 3
+    working_directory: ~/mailgun-tracking
+
+jobs:
+  checkout:
+    executor: default
+    steps:
+      - restore_cache:
+          key: checkout-{{ .Branch }}-{{ .Revision }}
+      - checkout
+      - save_cache:
+          key: checkout-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .
+
+  code-climate:
+    executor:
+      name: default
+      tag: "2.6"
+    steps:
+      - restore_cache:
+          key: checkout-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Install the current environment to the system
+          command: bundle install
+      - cc-setup-coverage
+      - run:
+          name: Run specs
+          command: |
+            ./tmp/cc-test-reporter
+            bundle exec rake coverage
+            ./tmp/cc-test-reporter after-build --exit-code $?
+
+  rubocop:
+    executor:
+      name: default
+      tag: "2.4"
+    steps:
+      - restore_cache:
+          key: checkout-{{ .Branch }}-{{ .Revision }}
+      - run: bundle install
+      - run:
+          name: Run RuboCop
           command: bundle exec rubocop --parallel
-  "ruby-2.2":
-    docker:
-      - image: circleci/ruby:2.2.9
-    working_directory: ~/mailgun-tracking
+
+  ruby-2-4:
+    executor:
+      name: default
+      tag: "2.4"
     steps:
-      - <<: *repo_restore_cache
-      - <<: *bundle_install
-      - <<: *appraisal_install
-      - <<: *unit
-      - <<: *rails42
-      - <<: *rails51
-      - <<: *rails52
-      - <<: *sinatra
-      - <<: *rack
-  "ruby-2.3":
-    docker:
-      - image: circleci/ruby:2.3
-    working_directory: ~/mailgun-tracking
+      - restore_cache:
+          key: checkout-{{ .Branch }}-{{ .Revision }}
+      - appraisal-install
+      - run: bundle exec rake spec:unit
+      - appraisal-matrix:
+          rails-6-0: false
+          rails-head: false
+
+  ruby-2-5:
+    executor:
+      name: default
+      tag: "2.5"
     steps:
-      - <<: *repo_restore_cache
-      - <<: *bundle_install
-      - <<: *appraisal_install
-      - <<: *unit
-      - <<: *rails42
-      - <<: *rails51
-      - <<: *rails52
-      - <<: *sinatra
-      - <<: *rack
-  "ruby-2.4":
-    docker:
-      - image: circleci/ruby:2.4
-    working_directory: ~/mailgun-tracking
+      - restore_cache:
+          key: checkout-{{ .Branch }}-{{ .Revision }}
+      - appraisal-install
+      - run: bundle exec rake spec:unit
+      - appraisal-matrix
+
+  ruby-2-6:
+    executor:
+      name: default
+      tag: "2.6"
     steps:
-      - <<: *repo_restore_cache
-      - <<: *bundle_install
-      - <<: *appraisal_install
-      - <<: *unit
-      - <<: *rails42
-      - <<: *rails51
-      - <<: *rails52
-      - <<: *rails_head
-      - <<: *sinatra
-      - <<: *rack
-  "ruby-2.5":
-    docker:
-      - image: circleci/ruby:2.5
-    working_directory: ~/mailgun-tracking
+      - restore_cache:
+          key: checkout-{{ .Branch }}-{{ .Revision }}
+      - appraisal-install
+      - run: bundle exec rake spec:unit
+      - appraisal-matrix
+
+  ruby-head:
+    executor: default
     steps:
-      - <<: *repo_restore_cache
-      - <<: *bundle_install
-      - <<: *appraisal_install
-      - <<: *unit
-      - <<: *rails42
-      - <<: *rails51
-      - <<: *rails52
-      - <<: *rails_head
-      - <<: *sinatra
-      - <<: *rack
+      - restore_cache:
+          key: checkout-{{ .Branch }}-{{ .Revision }}
+      - appraisal-install
+      - run: bundle exec rake spec:unit
+      - appraisal-matrix
+
 workflows:
   version: 2
-  build:
+  default: &default
     jobs:
-      - lint
-      - "ruby-2.2":
+      - checkout
+      - code-climate:
           requires:
-            - lint
-      - "ruby-2.3":
+            - checkout
+      - rubocop:
           requires:
-            - lint
-      - "ruby-2.4":
+            - checkout
+      - ruby-2-4:
           requires:
-            - lint
-      - "ruby-2.5":
+            - code-climate
+            - rubocop
+      - ruby-2-5:
           requires:
-            - lint
+            - code-climate
+            - rubocop
+      - ruby-2-6:
+          requires:
+            - code-climate
+            - rubocop
+      - ruby-head:
+          requires:
+            - code-climate
+            - rubocop
+
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    <<: *default

@@ -1,4 +1,4 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
 RSpec.describe Mailgun::Tracking::Subscriber::AllMessages do
   subject(:subscriber) { described_class.new(callable) }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
 RSpec.describe Mailgun::Tracking::Middleware do
   subject(:rack) { described_class.new(app) }
@@ -23,6 +23,7 @@ RSpec.describe Mailgun::Tracking::Middleware do
       end
 
       it { expect(rack.call(env)).to include(200) }
+
       it do
         rack.call(env)
         expect(Mailgun::Tracking).not_to have_received(:notifier)
@@ -39,6 +40,7 @@ RSpec.describe Mailgun::Tracking::Middleware do
       end
 
       it { expect(rack.call(env)).to include(400) }
+
       it do
         rack.call(env)
         expect(Mailgun::Tracking).to have_received(:notifier)
@@ -55,6 +57,7 @@ RSpec.describe Mailgun::Tracking::Middleware do
       end
 
       it { expect(rack.call(env)).to include(200) }
+
       it do
         rack.call(env)
         expect(Mailgun::Tracking).to have_received(:notifier)

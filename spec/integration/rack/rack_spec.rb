@@ -1,4 +1,5 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
 require 'dummy/rack/application'
 
 RSpec.describe 'Rack', type: :integration do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
 RSpec.describe Mailgun::Tracking::Notifier do
   subject(:notifier) { described_class.new(listener) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     # This module holds the Mailgun Tracking version information.
@@ -10,14 +12,14 @@ module Mailgun
       #
       # @return [Integer]
       def major
-        0
+        1
       end
 
       # Minor version.
       #
       # @return [Integer]
       def minor
-        3
+        0
       end
 
       # Patch version.

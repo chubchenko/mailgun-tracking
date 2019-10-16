@@ -1,4 +1,4 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
 RSpec.describe Mailgun::Tracking::Request do
   subject(:request) { described_class.new(env) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     # Rack-based middleware to handle event notifications.
@@ -9,14 +11,24 @@ module Mailgun
         @app = app
       end
 
-      # Responds to Rack requests.
+      # Thread-safe {call!}.
       #
       # @param env [Hash] Environment hash.
       #
       # @return [Array(Numeric,Hash,Array)] The Rack-style response.
       def call(env)
+        dup.call!(env)
+      end
+
+      # Responds to Rack requests.
+      #
+      # @param env [Hash] Environment hash.
+      #
+      # @return [Array(Numeric,Hash,Array)] The Rack-style response.
+      def call!(env)
         @request = Request.new(env)
         return @app.call(env) unless @request.mailgun_tracking?
+
         handle_event
       end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'singleton'
 
 module Mailgun
@@ -6,7 +8,7 @@ module Mailgun
     class Configuration
       include Singleton
 
-      DEFAULT_ENDPOINT = '/mailgun'.freeze
+      DEFAULT_ENDPOINT = '/mailgun'
 
       # Mailgun API public key.
       #

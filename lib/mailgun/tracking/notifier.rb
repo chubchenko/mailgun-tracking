@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     # Wraps the {Listener} which gives a friendlier way to subscribe or broadcast.
@@ -8,7 +10,7 @@ module Mailgun
       #
       # @return [Mailgun::Tracking::Notifier]
       def initialize(listener = Listener.new)
-        @listener ||= listener
+        @listener = listener
       end
 
       # Returns true if there is  at least one subscriber.
