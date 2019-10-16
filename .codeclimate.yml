@@ -1,16 +1,8 @@
----
-engines:
-  duplication:
-    enabled: true
-    config:
-      languages:
-      - ruby
-  fixme:
-    enabled: true
+version: '2'
+
+plugins:
   rubocop:
     enabled: true
-    channel: rubocop-0-54
-
-ratings:
-  paths:
-  - "**.rb"
+    channel: rubocop-0-75
+  fixme:
+    enabled: true
