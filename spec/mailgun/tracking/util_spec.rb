@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mailgun::Tracking::Util do
   describe '.normalize' do
     context 'when the keys of the object are strings' do

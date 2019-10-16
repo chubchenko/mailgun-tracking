@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'openssl'
 
 module Mailgun
@@ -14,6 +16,7 @@ module Mailgun
       def self.verify!(payload)
         signature = new(payload)
         raise InvalidSignature unless signature.valid?
+
         true
       end
 

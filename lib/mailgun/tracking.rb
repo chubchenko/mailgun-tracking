@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'mailgun/tracking/configuration'
 require 'mailgun/tracking/exceptions'
 require 'mailgun/tracking/listener'

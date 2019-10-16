@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mailgun::Tracking do
   it { is_expected.to respond_to(:api_key) }
   it { is_expected.to respond_to(:endpoint) }

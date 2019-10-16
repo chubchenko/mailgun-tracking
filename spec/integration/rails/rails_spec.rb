@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dummy/rails/application'
 
 RSpec.describe 'Rails', type: :integration do

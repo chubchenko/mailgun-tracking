@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     # Utility methods.
@@ -18,6 +20,7 @@ module Mailgun
         def normalize_keys(options)
           return from_h(options) if options.is_a?(Hash)
           return from_ary(options) if options.is_a?(Array)
+
           options
         end
 

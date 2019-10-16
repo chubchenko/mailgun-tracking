@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     # Creates the Mailgun Tracking initializer file for Rails apps.

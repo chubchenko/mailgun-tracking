@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'set'
 
 module Mailgun
@@ -39,6 +41,7 @@ module Mailgun
           keys.each do |key|
             define_method(key) { @options[key] }
             next unless [FalseClass, TrueClass].include?(options[key].class)
+
             define_method(:"#{key}?") { @options[key] }
           end
         end

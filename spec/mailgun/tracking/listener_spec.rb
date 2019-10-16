@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mailgun::Tracking::Listener do
   subject(:listener) { described_class.new }
 
