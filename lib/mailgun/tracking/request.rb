@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rack/request'
+
 module Mailgun
   module Tracking
     # Provides a convenient interface to a Rack environment.
