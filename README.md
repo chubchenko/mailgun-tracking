@@ -2,6 +2,7 @@
 
 [![Gem Version Badge](https://badge.fury.io/rb/mailgun-tracking.svg)](https://badge.fury.io/rb/mailgun-tracking)
 [![CircleCI Badge](https://circleci.com/gh/chubchenko/mailgun-tracking.svg?style=shield)](https://circleci.com/gh/chubchenko/mailgun-tracking)
+[![Appveyor Badge](https://ci.appveyor.com/api/projects/status/vcde62j739ls5ymk?svg=true)](https://ci.appveyor.com/project/chubchenko/mailgun-tracking)
 [![Code Climate Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/gpa.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking)
 [![Test Coverage Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/coverage.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking/coverage)
 [![Inline Docs Badge](http://inch-ci.org/github/chubchenko/mailgun-tracking.svg)](http://inch-ci.org/github/chubchenko/mailgun-tracking)
