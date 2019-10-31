@@ -5,12 +5,21 @@ environment:
     - RUBY_VERSION: 24
     - RUBY_VERSION: 25
     - RUBY_VERSION: 26
+    - RUBY_VERSION: head
 
 install:
   - set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
-  - bundle install
+  - bundle install && bundle exec appraisal install
 
 build: off
 
 test_script:
   - bundle exec rake spec:unit
+  - bundle exec appraisal rack rake spec:integration:rack
+  - bundle exec appraisal sinatra rake spec:integration:sinatra
+  - bundle exec appraisal rails-4-2 rake spec:integration:rails
+  - bundle exec appraisal rails-5-0 rake spec:integration:rails
+  - bundle exec appraisal rails-5-1 rake spec:integration:rails
+  - bundle exec appraisal rails-5-2 rake spec:integration:rails
+  - bundle exec appraisal rails-6-0 rake spec:integration:rails
+  - bundle exec appraisal rails-head rake spec:integration:rails
