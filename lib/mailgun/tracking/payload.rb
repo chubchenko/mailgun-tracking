@@ -2,6 +2,7 @@
 
 module Mailgun
   module Tracking
+    # Payload object.
     class Payload
       def initialize(options = {})
         @options = options

@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module Mailgun
   module Tracking
     class Payload
+      # Legacy payload object.
       class Legacy
         def initialize(options = {})
           @options = options
