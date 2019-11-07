@@ -26,10 +26,20 @@ module Mailgun
       #
       # @return [Array(Numeric,Hash,Array)] The Rack-style response.
       def call!(env)
-        @request = Request.new(env)
-        return @app.call(env) unless @request.mailgun_tracking?
+        request = Request.new(env)
 
-        handle_event
+        return @app.call(env) unless  request.mailgun_tracking?
+        # TODO: will be uncommented after drop support
+        # return @app.call(env) unless ['application/json'].include?(request.media_type)
+        if ['application/json'].include?(request.media_type)
+          body = env['rack.input'].read
+
+          env['rack.input'].rewind
+
+          env.update('rack.request.form_hash' => JSON.parse(body), 'rack.request.form_input' => env['rack.input'])
+        end
+
+        handle_event(payload_for(request.params))
       end
 
       private
@@ -44,11 +54,17 @@ module Mailgun
         [400, {}, []]
       end
 
-      def handle_event
-        Mailgun::Tracking.notifier.broadcast(@request.params.fetch('event'), @request.payload)
+      def handle_event(payload)
+        Mailgun::Tracking.notifier.broadcast(payload.event, payload)
         null_response
       rescue InvalidSignature
         bad_request
+      end
+
+      def payload_for(params)
+        return Payload::Legacy.new(params) if params.key?('timestamp')
+
+        Payload.new(params)
       end
     end
   end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'support/simplecov'
+
 require 'rack/test'
 require 'bundler/setup'
 require 'mailgun/tracking'

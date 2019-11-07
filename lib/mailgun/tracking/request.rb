@@ -16,9 +16,9 @@ module Mailgun
       end
 
       # @return [Mailgun::Tracking::Payload]
-      def payload
-        @payload ||= Payload.new(params)
-      end
+      # def payload
+      #   @payload ||= Payload.new(params)
+      # end
     end
   end
 end
