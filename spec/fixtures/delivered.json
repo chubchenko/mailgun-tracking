@@ -1,65 +1,65 @@
 {
-  "signature":{
-    "timestamp":"1572632560",
-    "token":"e71ad7ff8d6f43b62d31615083bde85fb55e4e2b5121cb1239",
-    "signature":"9d21d1689889ec5f4ffa3c7e5e6598c8450c3eada8f6cc03e47b2342a9c9da61"
+  "signature": {
+    "timestamp": "1572632560",
+    "token": "e71ad7ff8d6f43b62d31615083bde85fb55e4e2b5121cb1239",
+    "signature": "9d21d1689889ec5f4ffa3c7e5e6598c8450c3eada8f6cc03e47b2342a9c9da61"
   },
-  "event-data":{
-    "tags":[
+  "event-data": {
+    "tags": [
       "my_tag_1",
       "my_tag_2"
     ],
-    "timestamp":1521472262.908181,
-    "storage":{
-      "url":"https://se.api.mailgun.net/v3/domains/sandboxfb0641fa1b904bb28ba00cba62dca7f1.mailgun.org/messages/message_key",
-      "key":"message_key"
+    "timestamp": 1521472262.908181,
+    "storage": {
+      "url": "https://se.api.mailgun.net/v3/domains/sandboxfb0641fa1b904bb28ba00cba62dca7f1.mailgun.org/messages/message_key",
+      "key": "message_key"
     },
-    "envelope":{
-      "sending-ip":"209.61.154.250",
-      "sender":"bob@sandboxfb0641fa1b904bb28ba00cba62dca7f1.mailgun.org",
-      "transport":"smtp",
-      "targets":"alice@example.com"
+    "envelope": {
+      "sending-ip": "209.61.154.250",
+      "sender": "bob@sandboxfb0641fa1b904bb28ba00cba62dca7f1.mailgun.org",
+      "transport": "smtp",
+      "targets": "alice@example.com"
     },
-    "recipient-domain":"example.com",
-    "id":"CPgfbmQMTCKtHW6uIWtuVe",
-    "campaigns":[
+    "recipient-domain": "example.com",
+    "id": "CPgfbmQMTCKtHW6uIWtuVe",
+    "campaigns": [
 
     ],
-    "user-variables":{
-      "my_var_1":"Mailgun Variable #1",
-      "my-var-2":"awesome"
+    "user-variables": {
+      "my_var_1": "Mailgun Variable #1",
+      "my-var-2": "awesome"
     },
-    "flags":{
-      "is-routed":false,
-      "is-authenticated":true,
-      "is-system-test":false,
-      "is-test-mode":false
+    "flags": {
+      "is-routed": false,
+      "is-authenticated": true,
+      "is-system-test": false,
+      "is-test-mode": false
     },
-    "log-level":"info",
-    "message":{
-      "headers":{
-        "to":"Alice <alice@example.com>",
-        "message-id":"20130503182626.18666.16540@sandboxfb0641fa1b904bb28ba00cba62dca7f1.mailgun.org",
-        "from":"Bob <bob@sandboxfb0641fa1b904bb28ba00cba62dca7f1.mailgun.org>",
-        "subject":"Test delivered webhook"
+    "log-level": "info",
+    "message": {
+      "headers": {
+        "to": "Alice <alice@example.com>",
+        "message-id": "20130503182626.18666.16540@sandboxfb0641fa1b904bb28ba00cba62dca7f1.mailgun.org",
+        "from": "Bob <bob@sandboxfb0641fa1b904bb28ba00cba62dca7f1.mailgun.org>",
+        "subject": "Test delivered webhook"
       },
-      "attachments":[
+      "attachments": [
 
       ],
-      "size":111
+      "size": 111
     },
-    "recipient":"alice@example.com",
-    "event":"delivered",
-    "delivery-status":{
-      "tls":true,
-      "mx-host":"smtp-in.example.com",
-      "attempt-no":1,
-      "description":"",
-      "session-seconds":0.4331989288330078,
-      "utf8":true,
-      "code":250,
-      "message":"OK",
-      "certificate-verified":true
+    "recipient": "alice@example.com",
+    "event": "delivered",
+    "delivery-status": {
+      "tls": true,
+      "mx-host": "smtp-in.example.com",
+      "attempt-no": 1,
+      "description": "",
+      "session-seconds": 0.4331989288330078,
+      "utf8": true,
+      "code": 250,
+      "message": "OK",
+      "certificate-verified": true
     }
   }
 }
