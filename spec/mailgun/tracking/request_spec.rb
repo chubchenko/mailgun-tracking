@@ -22,4 +22,22 @@ RSpec.describe Mailgun::Tracking::Request do
       it { is_expected.not_to be_mailgun_tracking }
     end
   end
+
+  describe '#payload' do
+    context 'when the parameters contain the timestamp' do
+      let(:env) { env_for('http://localhost:3000/mailgun', method: :post, params: { 'timestamp' => '1572632560' }) }
+
+      it 'returns legacy payload' do
+        expect(request.payload).to be_an_instance_of(Mailgun::Tracking::Payload::Legacy)
+      end
+    end
+
+    context 'when the parameters do not contain the timestamp' do
+      let(:env) { env_for('http://localhost:3000/mailgun', method: :post, params: { 'signature' => {} }) }
+
+      it 'returns payload' do
+        expect(request.payload).to be_an_instance_of(Mailgun::Tracking::Payload)
+      end
+    end
+  end
 end

@@ -12,6 +12,10 @@ Metrics/BlockLength:
   ExcludedMethods:
     - describe
 
+Naming/MethodName:
+  IgnoredPatterns:
+    - '\APOST'
+
 RSpec/DescribeClass:
   Exclude:
     - 'spec/integration/**/*'
