@@ -40,4 +40,22 @@ RSpec.describe Mailgun::Tracking::Request do
       end
     end
   end
+
+  context 'when application/json request' do
+    let(:env) { env_for('/', method: :post, input: input, 'CONTENT_TYPE' => content_type) }
+    let(:input) { 'foo=bar' }
+    let(:content_type) { 'application/json; charset=utf-8' }
+
+    it 'rewinds input' do
+      expect(request.body.read).to eq(input)
+    end
+
+    context 'when input is a hash' do
+      let(:input) { '{"qux": "bin"}' }
+
+      it 'adds a parsed hash to POST params' do
+        expect(request.params['qux']).to eq('bin')
+      end
+    end
+  end
 end
