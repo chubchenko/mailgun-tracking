@@ -35,7 +35,7 @@ module Mailgun
 
       private
 
-      # @return [Array(Numeric,Hash,cArray)] The Rack-style response.
+      # @return [Array(Numeric,Hash,Array)] The Rack-style response.
       def null_response
         [200, {}, []]
       end

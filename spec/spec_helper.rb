@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'support/simplecov'
+require 'simplecov' if ENV['COVERAGE']
 
 require 'rack/test'
 require 'bundler/setup'
