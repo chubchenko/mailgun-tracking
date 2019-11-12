@@ -26,14 +26,12 @@ module Mailgun
       #
       # @return [Mailgun::Tracking::Signature]
       def initialize(payload)
-        @token = payload['token']
-        @timestamp = payload['timestamp']
-        @signature = payload['signature']
+        @payload = payload
       end
 
       # @return [Boolean]
       def valid?
-        @signature == OpenSSL::HMAC.hexdigest(digest, Configuration.instance.api_key, data)
+        @payload.signature == OpenSSL::HMAC.hexdigest(digest, Configuration.instance.api_key, data)
       end
 
       private
@@ -47,7 +45,7 @@ module Mailgun
       #
       # @return [String]
       def data
-        [@timestamp, @token].join
+        [@payload.timestamp, @payload.token].join
       end
     end
   end

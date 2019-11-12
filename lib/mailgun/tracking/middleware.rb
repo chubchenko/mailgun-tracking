@@ -27,6 +27,7 @@ module Mailgun
       # @return [Array(Numeric,Hash,Array)] The Rack-style response.
       def call!(env)
         @request = Request.new(env)
+
         return @app.call(env) unless @request.mailgun_tracking?
 
         handle_event
@@ -45,7 +46,7 @@ module Mailgun
       end
 
       def handle_event
-        Mailgun::Tracking.notifier.broadcast(@request.params.fetch('event'), @request.payload)
+        Mailgun::Tracking.notifier.broadcast(@request.payload.event, @request.payload)
         null_response
       rescue InvalidSignature
         bad_request

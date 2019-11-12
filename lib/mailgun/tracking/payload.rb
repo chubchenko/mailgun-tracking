@@ -1,50 +1,43 @@
 # frozen_string_literal: true
 
-require 'set'
+require_relative 'payload/legacy'
 
 module Mailgun
   module Tracking
     # Payload object.
     class Payload
-      # Initializes a new Payload object.
-      #
-      # @param options [Hash]
-      #
-      # @return [Mailgun::Tracking::Payload]
       def initialize(options = {})
-        @options = Util.normalize(options)
-        @original = options
-        define_instance_methods(Set.new(@options.keys), @options)
+        @options = options
       end
 
-      # Returns a value of the original payload with the given key.
-      #
-      # @param key [String]
-      #
-      # @return a value of the original payload.
-      def [](key)
-        @original[key]
+      def body
+        @options
+      end
+
+      def event
+        @event ||= __event_data.fetch('event')
+      end
+
+      def token
+        @token ||= __signature.fetch('token')
+      end
+
+      def timestamp
+        @timestamp ||= __signature.fetch('timestamp')
+      end
+
+      def signature
+        @signature ||= __signature.fetch('signature')
       end
 
       private
 
-      # @return [Class]
-      def __metaclass__
-        class << self
-          self
-        end
+      def __signature
+        @__signature ||= @options.fetch('signature')
       end
 
-      # @return [void]
-      def define_instance_methods(keys, options)
-        __metaclass__.instance_eval do
-          keys.each do |key|
-            define_method(key) { @options[key] }
-            next unless [FalseClass, TrueClass].include?(options[key].class)
-
-            define_method(:"#{key}?") { @options[key] }
-          end
-        end
+      def __event_data
+        @__event_data ||= @options.fetch('event-data')
       end
     end
   end
