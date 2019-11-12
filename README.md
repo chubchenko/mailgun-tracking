@@ -18,15 +18,17 @@ gem 'mailgun-tracking'
 
 And then execute:
 
-    $ bundle
+```bash
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install mailgun-tracking
+```bash
+gem install mailgun-tracking
+```
 
-## Configuration
-
-### Rails
+## Configurations
 
 To integrate Mailgun Tracking with your Rails application, you need to know
 your api key and endpoint. Invoke the following command
