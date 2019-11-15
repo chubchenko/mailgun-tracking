@@ -4,6 +4,8 @@
 
 * Added
   * Add integration with new webhooks API
+* Changed
+  * `Mailgun::Tracking::Payload::Legacy` is deprecated in favor of `Mailgun::Tracking::Payload`
 
 ## 1.0.0 (2019-10-16)
 
