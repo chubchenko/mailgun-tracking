@@ -166,7 +166,7 @@ jobs:
           name: Run specs
           command: |
             ./tmp/cc-test-reporter
-            bundle exec rake coverage
+            COVERAGE=true bundle exec rake
             ./tmp/cc-test-reporter after-build --exit-code $?
 
   rubocop:

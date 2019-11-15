@@ -2,6 +2,7 @@
 
 [![Gem Version Badge](https://badge.fury.io/rb/mailgun-tracking.svg)](https://badge.fury.io/rb/mailgun-tracking)
 [![CircleCI Badge](https://circleci.com/gh/chubchenko/mailgun-tracking.svg?style=shield)](https://circleci.com/gh/chubchenko/mailgun-tracking)
+[![Gem Downloads Badge](https://img.shields.io/gem/dt/mailgun-tracking)](https://rubygems.org/gems/mailgun-tracking)
 [![Code Climate Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/gpa.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking)
 [![Test Coverage Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/coverage.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking/coverage)
 [![Inline Docs Badge](http://inch-ci.org/github/chubchenko/mailgun-tracking.svg)](http://inch-ci.org/github/chubchenko/mailgun-tracking)
@@ -18,15 +19,17 @@ gem 'mailgun-tracking'
 
 And then execute:
 
-    $ bundle
+```bash
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install mailgun-tracking
+```bash
+gem install mailgun-tracking
+```
 
-## Configuration
-
-### Rails
+## Configurations
 
 To integrate Mailgun Tracking with your Rails application, you need to know
 your api key and endpoint. Invoke the following command

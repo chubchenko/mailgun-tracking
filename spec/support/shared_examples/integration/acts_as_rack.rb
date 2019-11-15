@@ -6,7 +6,7 @@ end
 
 RSpec.shared_examples 'acts as rack' do
   let(:app) { Dummy::Application }
-  let(:payload) { fixture('delivered.json') }
+  let(:payload) { fixture('legacy/delivered.json') }
   let(:delivered) { instance_double(Delivered) }
 
   before do
@@ -24,7 +24,7 @@ RSpec.shared_examples 'acts as rack' do
 
   it do
     post('/mailgun', payload)
-    expect(delivered).to have_received(:call).with(instance_of(Mailgun::Tracking::Payload)).twice
+    expect(delivered).to have_received(:call).with(payload).twice
   end
 
   context 'when the signature comparison is unsuccessful' do

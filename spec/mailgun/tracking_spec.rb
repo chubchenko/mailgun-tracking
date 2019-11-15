@@ -6,6 +6,12 @@ RSpec.describe Mailgun::Tracking do
   it { is_expected.to respond_to(:api_key=) }
   it { is_expected.to respond_to(:endpoint=) }
 
+  it do
+    expect do
+      described_class.non_existent_method
+    end.to raise_error(NoMethodError)
+  end
+
   describe '.configure' do
     before do
       described_class.configure do |config|

@@ -49,7 +49,7 @@ module Mailgun
       # @return [NilClass]
       def broadcast(event, payload)
         Signature.verify!(payload)
-        listener.broadcast(event, payload)
+        listener.broadcast(event, payload.body)
       end
 
       private

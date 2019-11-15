@@ -24,7 +24,7 @@ RSpec.describe Mailgun::Tracking::Listener do
   end
 
   describe '#broadcast' do
-    let(:payload) { fixture('delivered.json') }
+    let(:payload) { fixture('legacy/delivered.json') }
 
     before do
       allow(subscriber).to receive(:call)
