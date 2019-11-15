@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.1.0 (2019-11-15)
 
 * Added
   * Add integration with new webhooks API
