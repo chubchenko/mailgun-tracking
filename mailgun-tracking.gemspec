@@ -15,6 +15,12 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/chubchenko/mailgun-tracking'
   spec.license       = 'MIT'
 
+  spec.metadata = {
+    'bug_tracker_uri' => 'https://github.com/chubchenko/mailgun-tracking/issues',
+    'changelog_uri' => 'https://github.com/chubchenko/mailgun-tracking/blob/master/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/chubchenko/mailgun-tracking'
+  }
+
   spec.files         = Dir['{lib}/**/*']
   spec.test_files    = Dir['{spec}/**/*']
   spec.require_paths = ['lib']
