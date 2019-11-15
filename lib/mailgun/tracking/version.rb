@@ -19,7 +19,7 @@ module Mailgun
       #
       # @return [Integer]
       def minor
-        0
+        1
       end
 
       # Patch version.
