@@ -7,6 +7,10 @@ module Mailgun
       class Legacy
         def initialize(options = {})
           @options = options
+          warn(<<~DEPRECATION)
+            [Mailgun::Tracking] The Legacy class refers to a previous version of the API
+            which is deprecated and it will be removed in the next major version.
+          DEPRECATION
         end
 
         def body
