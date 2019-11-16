@@ -104,6 +104,34 @@ end
 run Application.run!
 ```
 
+### Testing
+
+Handling webhooks is a critical piece of modern systems. Verifying the behavior of `Mailgun::Tracking` subscribers
+can be done fairly easily by stubbing out the HTTP signature header used to authenticate the webhook request.
+[RequestBin](https://requestbin.com/) is great for collecting the payloads. For exploratory phases of development,
+[UltraHook](http://www.ultrahook.com/) and other tools can forward webhook requests directly to the localhost.
+Here an example of how to test `Mailgun::Tracking` with RSpec request specs:
+
+```ruby
+RSpec.describe 'Mailgun Webhooks' do
+  describe 'delivered' do
+    let(:payload) { File.read('spec/support/fixtures/delivered.json') }
+    let(:bounced) { instance_double(Bounced) }
+
+    before do
+      allow(bounced).to receive(:call)
+      allow(Bounced).to receive(:new).and_return(bounced)
+    end
+
+    it 'is successful' do
+      post('/mailgun', body: payload)
+
+      expect(bounced).to have_received(:call).with(payloads)
+    end
+  end
+end
+```
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
