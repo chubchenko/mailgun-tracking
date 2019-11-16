@@ -6,7 +6,7 @@ end
 
 RSpec.shared_examples 'acts as rack' do
   let(:app) { Dummy::Application }
-  let(:payload) { fixture('legacy/delivered.json') }
+  let(:payload) { fixture('delivered.json') }
   let(:delivered) { instance_double(Delivered) }
 
   before do

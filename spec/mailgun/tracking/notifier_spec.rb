@@ -47,7 +47,7 @@ RSpec.describe Mailgun::Tracking::Notifier do
   end
 
   describe '#broadcast' do
-    let(:payload) { instance_double(Mailgun::Tracking::Payload, body: fixture('legacy/delivered.json')) }
+    let(:payload) { instance_double(Mailgun::Tracking::Payload, body: fixture('delivered.json')) }
 
     before do
       allow(Mailgun::Tracking::Signature).to receive(:verify!)
@@ -60,7 +60,7 @@ RSpec.describe Mailgun::Tracking::Notifier do
     end
 
     it 'broadcasts an event' do
-      expect(listener).to have_received(:broadcast).with(:delivered, fixture('legacy/delivered.json'))
+      expect(listener).to have_received(:broadcast).with(:delivered, fixture('delivered.json'))
     end
   end
 end
