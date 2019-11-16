@@ -11,19 +11,14 @@ module Mailgun
       # @return [Boolean]
       def mailgun_tracking?
         return false unless post?
+        return false unless media_type == APPLICATION_JSON
 
         path == Configuration.instance.endpoint
       end
 
-      # @return [Mailgun::Tracking::Payload, Mailgun::Tracking::Payload::Legacy]
+      # @return [Mailgun::Tracking::Payload]
       def payload
-        @payload ||= begin
-          if params.key?('timestamp')
-            ::Mailgun::Tracking::Payload::Legacy.new(params)
-          else
-            ::Mailgun::Tracking::Payload.new(params)
-          end
-        end
+        @payload ||= Payload.new(params)
       end
 
       # A Mailgun::Tracking::Request::JSON is used to parsing JSON requests.
@@ -42,7 +37,7 @@ module Mailgun
           self.body.rewind
           env.update(FORM_HASH => ::JSON.parse(body), FORM_INPUT => body)
 
-          get_header(FORM_HASH)
+          env[FORM_HASH]
         end
       end
 

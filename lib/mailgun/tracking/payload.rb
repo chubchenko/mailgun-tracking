@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'payload/legacy'
-
 module Mailgun
   module Tracking
     # Payload object.

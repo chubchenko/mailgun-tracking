@@ -4,6 +4,9 @@
 
 * Added
   * Test with Hanami 1.X, head 🌸
+* Changed
+  * Use `require_relative` instead of `require`
+  * Remove the deprecated `Mailgun::Tracking::Payload::Legacy`
 
 ## 1.1.0 (2019-11-15)
 

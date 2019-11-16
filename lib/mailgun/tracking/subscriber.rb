@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'mailgun/tracking/subscriber/all_messages'
-require 'mailgun/tracking/subscriber/evented'
+require_relative 'subscriber/all_messages'
+require_relative 'subscriber/evented'
 
 module Mailgun
   module Tracking

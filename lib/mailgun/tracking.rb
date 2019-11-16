@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
-require 'mailgun/tracking/configuration'
-require 'mailgun/tracking/exceptions'
-require 'mailgun/tracking/listener'
-require 'mailgun/tracking/middleware'
-require 'mailgun/tracking/notifier'
-require 'mailgun/tracking/payload'
-require 'mailgun/tracking/payload/legacy'
-require 'mailgun/tracking/signature'
-require 'mailgun/tracking/subscriber'
-require 'mailgun/tracking/util'
-require 'mailgun/tracking/version'
-require 'mailgun/tracking/railtie' if defined?(Rails)
-require 'mailgun/tracking/request'
+require_relative 'tracking/configuration'
+require_relative 'tracking/exceptions'
+require_relative 'tracking/listener'
+require_relative 'tracking/middleware'
+require_relative 'tracking/notifier'
+require_relative 'tracking/payload'
+require_relative 'tracking/signature'
+require_relative 'tracking/subscriber'
+require_relative 'tracking/util'
+require_relative 'tracking/version'
+require_relative 'tracking/railtie' if defined?(Rails)
+require_relative 'tracking/request'
 
 # Module for interacting with the Mailgun.
 module Mailgun

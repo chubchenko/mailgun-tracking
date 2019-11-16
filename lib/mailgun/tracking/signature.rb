@@ -31,15 +31,10 @@ module Mailgun
 
       # @return [Boolean]
       def valid?
-        @payload.signature == OpenSSL::HMAC.hexdigest(digest, Configuration.instance.api_key, data)
+        @payload.signature == OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, Configuration.instance.api_key, data)
       end
 
       private
-
-      # @return [OpenSSL::Digest::SHA256]
-      def digest
-        OpenSSL::Digest::SHA256.new
-      end
 
       # Joins the timestamp and the response token.
       #
