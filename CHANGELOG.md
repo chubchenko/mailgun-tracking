@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+* Added
+  * Test with Hanami 1.X, head 🌸
+
 ## 1.1.0 (2019-11-15)
 
 * Added

@@ -9,7 +9,7 @@ namespace :spec do
   end
 
   namespace :integration do
-    %i[rack rails sinatra].each do |app|
+    %i[rack rails sinatra hanami].each do |app|
       RSpec::Core::RakeTask.new(app) do |t|
         t.pattern = "spec/integration/#{app}/*_spec.rb"
       end

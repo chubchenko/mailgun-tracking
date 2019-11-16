@@ -45,6 +45,12 @@ commands:
       rack:
         type: boolean
         default: true
+      hanami-1:
+        type: boolean
+        default: true
+      hanami-head:
+        type: boolean
+        default: true
     steps:
       - when:
           condition: << parameters.rails-4-2 >>
@@ -94,6 +100,18 @@ commands:
             - appraisal:
                 appraisal-name: 'rack'
                 external-command: 'rake spec:integration:rack'
+      - when:
+          condition: << parameters.hanami-1 >>
+          steps:
+            - appraisal:
+                appraisal-name: 'hanami-1'
+                external-command: 'rake spec:integration:hanami'
+      - when:
+          condition: << parameters.hanami-head >>
+          steps:
+            - appraisal:
+                appraisal-name: 'hanami-head'
+                external-command: 'rake spec:integration:hanami'
 
   cc-setup-coverage:
     description: Setup Code Climate

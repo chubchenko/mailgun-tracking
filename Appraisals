@@ -25,10 +25,18 @@ end
 
 if RUBY_VERSION >= '2.5.0'
   appraise 'rails-6-0' do
-    gem 'rails', '~> 6.0'
+    gem 'rails', '~> 6.0', '>= 6.0.1'
   end
 
   appraise 'rails-head' do
     gem 'rails', github: 'rails'
   end
+
+  appraise 'hanami-head' do
+    gem 'hanami', github: 'hanami'
+  end
+end
+
+appraise 'hanami-1' do
+  gem 'hanami', '~> 1.3'
 end
