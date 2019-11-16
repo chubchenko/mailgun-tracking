@@ -1,7 +1,8 @@
-<!--
-  This template is for bug reports. If you are reporting a bug, please continue on. If you are here for another reason,
-  feel free to skip the rest of this template.
--->
+---
+name: Bug Report
+about: Report an issue with Mailgun::Tracking you've discovered
+
+---
 
 ### Tell us about your environment
 
