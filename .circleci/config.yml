@@ -211,6 +211,7 @@ jobs:
       - appraisal-matrix:
           rails-6-0: false
           rails-head: false
+          hanami-head: false
 
   ruby-2-5:
     executor:
