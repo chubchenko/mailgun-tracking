@@ -31,7 +31,7 @@ module Mailgun
 
       # @return [Boolean]
       def valid?
-        @payload.signature == OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, Configuration.instance.api_key, data)
+        @payload.signature.signature == OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, Configuration.instance.api_key, data)
       end
 
       private
@@ -40,7 +40,7 @@ module Mailgun
       #
       # @return [String]
       def data
-        [@payload.timestamp, @payload.token].join
+        [@payload.signature.timestamp, @payload.signature.token].join
       end
     end
   end
