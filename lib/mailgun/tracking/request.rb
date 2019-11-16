@@ -37,7 +37,7 @@ module Mailgun
           self.body.rewind
           env.update(FORM_HASH => ::JSON.parse(body), FORM_INPUT => body)
 
-          get_header(FORM_HASH)
+          env[FORM_HASH]
         end
       end
 

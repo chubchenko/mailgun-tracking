@@ -23,15 +23,15 @@ RSpec.shared_examples 'acts as rack' do
   end
 
   it do
-    post('/mailgun', payload)
+    post('/mailgun', payload.to_json, 'CONTENT_TYPE' => 'application/json')
     expect(delivered).to have_received(:call).with(payload).twice
   end
 
   context 'when the signature comparison is unsuccessful' do
-    before { payload['timestamp'] = '' }
+    before { payload['signature']['timestamp'] = '' }
 
     it do
-      post('/mailgun', payload)
+      post('/mailgun', payload.to_json, 'CONTENT_TYPE' => 'application/json')
       expect(last_response).to be_bad_request
     end
   end
