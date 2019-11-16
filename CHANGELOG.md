@@ -4,6 +4,8 @@
 
 * Added
   * Test with Hanami 1.X, head 🌸
+* Changed
+  * Use `require_relative` instead of `require`
 
 ## 1.1.0 (2019-11-15)
 
