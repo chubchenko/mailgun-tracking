@@ -104,7 +104,7 @@ end
 run Application.run!
 ```
 
-### Testing
+## Testing
 
 Handling webhooks is a critical piece of modern systems. Verifying the behavior of `Mailgun::Tracking` subscribers
 can be done fairly easily by stubbing out the HTTP signature header used to authenticate the webhook request.
