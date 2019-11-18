@@ -4,6 +4,7 @@
 
 * Added
   * Test with Hanami 1.X, head 🌸
+  * Pass `Mailgun::Tracking::Payload` instead of pure `Hash` to subscribers
 * Changed
   * Use `require_relative` instead of `require`
   * Remove the deprecated `Mailgun::Tracking::Payload::Legacy`
