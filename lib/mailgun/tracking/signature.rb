@@ -8,7 +8,7 @@ module Mailgun
     class Signature
       # Verify the signature of the response parameters.
       #
-      # @param payload [Hash]
+      # @param payload [Mailgun::Tracking::Payload]
       # @raise [InvalidSignature] Error raised when signature is invalid.
       #
       # @return [Boolean]
@@ -31,7 +31,8 @@ module Mailgun
 
       # @return [Boolean]
       def valid?
-        @payload.signature.signature == OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, Configuration.instance.api_key, data)
+        @payload.signature.signature == \
+          OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, Configuration.instance.api_key, data)
       end
 
       private

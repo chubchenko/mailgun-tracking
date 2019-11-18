@@ -9,7 +9,7 @@ RSpec.describe Mailgun::Tracking::Middleware do
     instance_double(Mailgun::Tracking::Request, payload: payload, media_type: 'application/x-www-form-urlencoded')
   end
   let(:env) { env_for('http://localhost:3000') }
-  let(:payload) { instance_double(Mailgun::Tracking::Payload, event: 'delivered') }
+  let(:payload) { Mailgun::Tracking::Payload.new('event-data' => { event: 'delivered' }) }
 
   before do
     allow(Mailgun::Tracking).to receive(:notifier).and_return(notifier)

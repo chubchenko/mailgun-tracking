@@ -6,50 +6,65 @@ module Mailgun
   module Tracking
     # Payload object.
     class Payload
+      TRY_TO_HASH = lambda do |value|
+        return if value.nil?
+
+        value.respond_to?(:to_hash) ? value.to_hash : value
+      end.freeze
+
       # Initializes a new Payload object.
       #
-      # @param options [Hash]
+      # @param values [Hash]
       #
       # @return [Mailgun::Tracking::Payload]
-      def initialize(options = {})
-        @options = Util.normalize(options)
-        @original = options
+      def initialize(values = {})
+        @values = Util.normalize(values)
 
-        define_instance_methods(Set.new(@options.keys), @options)
-
-        @options.each do |k, v|
-          @options[k] = Util.convert_to_payload_object(v)
+        @values.each do |key, value|
+          define_instance_methods([key], values) unless __metaclass__.method_defined?(key)
+          @values[key] = Util.convert_to_payload_object(value)
         end
       end
 
-      # Returns a value of the original payload with the given key.
+      # Returns a value of the payload with the given key.
       #
       # @param key [String]
       #
-      # @return a value of the original payload.
+      # @return a value of the payload.
       def [](key)
-        @original[key]
+        @values[key]
       end
 
+      # @return [Boolean]
+      def ==(other)
+        return false unless other.is_a?(Payload)
+
+        values == other.values
+      end
+
+      alias eql? ==
+
+      # @return [Integer] The object's hash value (for equality checking)
+      def hash
+        values.hash
+      end
+
+      # @return [Hash] Recursively convert payload objects to the hash.
+      def to_hash
+        @values.each_with_object({}) do |(key, value), memo|
+          memo[key] =
+            case value
+            when Array
+              value.map(&TRY_TO_HASH)
+            else
+              TRY_TO_HASH.call(value)
+            end
+        end
+      end
+
+      # @return [String] The string representation of the payload.
       def to_s
         JSON.pretty_generate(to_hash)
-      end
-
-      def to_hash
-        maybe_to_hash = lambda do |value|
-          return nil if value.nil?
-
-          value.respond_to?(:to_hash) ? value.to_hash : value
-        end
-
-        @options.each_with_object({}) do |(key, value), acc|
-          acc[key] = case value
-                     when Array
-                       value.map(&maybe_to_hash)
-                     else
-                       maybe_to_hash.call(value)
-                     end
-        end
       end
 
       private
@@ -62,16 +77,20 @@ module Mailgun
       end
 
       # @return [void]
-      def define_instance_methods(keys, options)
+      def define_instance_methods(keys, values)
         __metaclass__.instance_eval do
           keys.each do |key|
-            define_method(key) { @options[key] }
-            next unless [FalseClass, TrueClass].include?(options[key].class)
+            define_method(key) { @values[key] }
+            next unless [FalseClass, TrueClass].include?(values[key].class)
 
-            define_method(:"#{key}?") { @options[key] }
+            define_method(:"#{key}?") { @values[key] }
           end
         end
       end
+
+      protected
+
+      attr_reader :values
     end
   end
 end

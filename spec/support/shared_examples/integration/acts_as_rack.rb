@@ -24,7 +24,7 @@ RSpec.shared_examples 'acts as rack' do
 
   it do
     post('/mailgun', payload.to_json, 'CONTENT_TYPE' => 'application/json')
-    expect(delivered).to have_received(:call).with(payload).twice
+    expect(delivered).to have_received(:call).with(Mailgun::Tracking::Payload.new(payload)).twice
   end
 
   context 'when the signature comparison is unsuccessful' do
