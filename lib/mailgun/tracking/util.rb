@@ -5,6 +5,24 @@ module Mailgun
     # Utility methods.
     module Util
       class << self
+        # Converts a hash of fields or an array of hashes into a {Payload}.
+        #
+        # @param data [Hash, Array] Hash of fields and values to be converted into a Payload.
+        #
+        # @return [...]
+        def convert_to_payload_object(data)
+          case data
+          when Array
+            data.map { |i| convert_to_payload_object(i) }
+          when Hash
+            Payload.new(data)
+          else
+            data
+          end
+        end
+      end
+
+      class << self
         # Returns a new hash with all keys converted to symbols in downcase.
         #
         # @param options [Hash]

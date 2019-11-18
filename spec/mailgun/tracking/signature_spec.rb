@@ -6,11 +6,12 @@ RSpec.describe Mailgun::Tracking::Signature do
   describe '.verify!' do
     context 'when the signature comparison is successful' do
       let(:payload) do
-        instance_double(
-          Mailgun::Tracking::Payload,
-          timestamp: '1499697910',
-          token: 'b5751a49a024483da8d41c3684f98b8f',
-          signature: '374e0b1a3deeb57318c783d43ff71093fbf26406a452761dab91bf346a93b49e'
+        Mailgun::Tracking::Payload.new(
+          signature: {
+            timestamp: '1499697910',
+            token: 'b5751a49a024483da8d41c3684f98b8f',
+            signature: '374e0b1a3deeb57318c783d43ff71093fbf26406a452761dab91bf346a93b49e'
+          }
         )
       end
 
@@ -19,11 +20,12 @@ RSpec.describe Mailgun::Tracking::Signature do
 
     context 'when the signature comparison is unsuccessful' do
       let(:payload) do
-        instance_double(
-          Mailgun::Tracking::Payload,
-          timestamp: '',
-          token: 'b5751a49a024483da8d41c3684f98b8f',
-          signature: '374e0b1a3deeb57318c783d43ff71093fbf26406a452761dab91bf346a93b49e'
+        Mailgun::Tracking::Payload.new(
+          signature: {
+            timestamp: '',
+            token: 'b5751a49a024483da8d41c3684f98b8f',
+            signature: '374e0b1a3deeb57318c783d43ff71093fbf26406a452761dab91bf346a93b49e'
+          }
         )
       end
 
@@ -34,11 +36,12 @@ RSpec.describe Mailgun::Tracking::Signature do
   describe '#valid?' do
     context 'when the signature comparison is successful' do
       let(:payload) do
-        instance_double(
-          Mailgun::Tracking::Payload,
-          timestamp: '1499697910',
-          token: 'b5751a49a024483da8d41c3684f98b8f',
-          signature: '374e0b1a3deeb57318c783d43ff71093fbf26406a452761dab91bf346a93b49e'
+        Mailgun::Tracking::Payload.new(
+          signature: {
+            timestamp: '1499697910',
+            token: 'b5751a49a024483da8d41c3684f98b8f',
+            signature: '374e0b1a3deeb57318c783d43ff71093fbf26406a452761dab91bf346a93b49e'
+          }
         )
       end
 
@@ -47,11 +50,12 @@ RSpec.describe Mailgun::Tracking::Signature do
 
     context 'when the signature comparison is unsuccessful' do
       let(:payload) do
-        instance_double(
-          Mailgun::Tracking::Payload,
-          timestamp: '',
-          token: 'b5751a49a024483da8d41c3684f98b8f',
-          signature: '374e0b1a3deeb57318c783d43ff71093fbf26406a452761dab91bf346a93b49e'
+        Mailgun::Tracking::Payload.new(
+          signature: {
+            timestamp: '',
+            token: 'b5751a49a024483da8d41c3684f98b8f',
+            signature: '374e0b1a3deeb57318c783d43ff71093fbf26406a452761dab91bf346a93b49e'
+          }
         )
       end
 
