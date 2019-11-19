@@ -12,14 +12,14 @@ module Mailgun
       #
       # @return [Integer]
       def major
-        1
+        2
       end
 
       # Minor version.
       #
       # @return [Integer]
       def minor
-        1
+        0
       end
 
       # Patch version.
