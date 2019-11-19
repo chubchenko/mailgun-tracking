@@ -9,11 +9,11 @@ module Mailgun
         #
         # @param data [Hash, Array] Hash of fields and values to be converted into a Payload.
         #
-        # @return [...]
+        # @return [Mailgun::Tracking::Payload, Array(Mailgun::Tracking::Payload)]
         def convert_to_payload_object(data)
           case data
           when Array
-            data.map { |i| convert_to_payload_object(i) }
+            data.map { |item| convert_to_payload_object(item) }
           when Hash
             Payload.new(data)
           else

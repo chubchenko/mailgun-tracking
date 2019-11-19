@@ -22,7 +22,7 @@ module Mailgun
 
       # Initializes a new Signature object.
       #
-      # @param payload [Hash]
+      # @param payload [Mailgun::Tracking::Payload]
       #
       # @return [Mailgun::Tracking::Signature]
       def initialize(payload)
