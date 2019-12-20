@@ -34,7 +34,7 @@ jobs:
 
       - name: Install Bundler
         run: |
-          gem install bundler
+          gem install bundler -v 1.17.3
 
       - name: Configure Gemfile
         run: |
