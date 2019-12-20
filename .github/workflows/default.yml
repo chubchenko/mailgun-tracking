@@ -1,41 +1,46 @@
 name: Default
 
-on: [push]
+on: [pull_request]
 
 jobs:
   build:
-    name: Default
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        ruby: ["2.4.x", "2.5.x", "2.6.x"]
+        ruby: ['2.4.x', '2.5.x', '2.6.x', 'head']
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@master
 
-      - name: ...
+      - name: Setup ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: ${{matrix.ruby}}
+          ruby-version: ${{ matrix.ruby }}
 
-      - name: ...
-        run: |
-          gem install bundler
-          bundle install && bundle exec appraisal install
-          bundle exec rake
-
-          bundle exec appraisal rails-4-2 rake spec:integration:rails
-          bundle exec appraisal rails-5-0 rake spec:integration:rails
-          bundle exec appraisal rails-5-1 rake spec:integration:rails
-          bundle exec appraisal rails-5-2 rake spec:integration:rails
-          bundle exec appraisal rails-6-0 rake spec:integration:rails
-          bundle exec appraisal rails-head rake spec:integration:rails
-
-          bundle exec appraisal sinatra rake spec:integration:sinatra
-
-          bundle exec appraisal rack rake spec:integration:rack
-
-          bundle exec appraisal hanami-1 rake spec:integration:hanami
-          bundle exec appraisal hanami-head rake spec:integration:hanami
+      # - uses: actions/checkout@v1
+      #
+      # - name: ...
+      #   uses: actions/setup-ruby@v1
+      #   with:
+      #     ruby-version: ${{matrix.ruby}}
+      #
+      # - name: ...
+      #   run: |
+      #     gem install bundler
+      #     bundle install && bundle exec appraisal install
+      #     bundle exec rake
+      #
+      #     bundle exec appraisal rails-4-2 rake spec:integration:rails
+      #     bundle exec appraisal rails-5-0 rake spec:integration:rails
+      #     bundle exec appraisal rails-5-1 rake spec:integration:rails
+      #     bundle exec appraisal rails-5-2 rake spec:integration:rails
+      #     bundle exec appraisal rails-6-0 rake spec:integration:rails
+      #     bundle exec appraisal rails-head rake spec:integration:rails
+      #
+      #     bundle exec appraisal sinatra rake spec:integration:sinatra
+      #
+      #     bundle exec appraisal rack rake spec:integration:rack
+      #
+      #     bundle exec appraisal hanami-1 rake spec:integration:hanami
+      #     bundle exec appraisal hanami-head rake spec:integration:hanami
