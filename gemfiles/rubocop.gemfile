@@ -3,6 +3,5 @@
 source 'https://rubygems.org'
 
 gem 'rubocop', '~> 0.78.0'
-gem 'rubocop-md', '~> 0.3.0'
 gem 'rubocop-performance', '~> 1.5', '>= 1.5.1'
 gem 'rubocop-rspec', '~> 1.37', '>= 1.37.1'

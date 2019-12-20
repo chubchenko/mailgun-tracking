@@ -13,9 +13,19 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.4.x
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-bundle-${{ hashFiles('gemfiles/rubocop.gemfile') }}
+          restore-keys: |
+            ${{ runner.os }}-bundle-
       - name: Install a bundler gem
         run: |
           gem install bundler
+      - name: Set a configuration value
+        run: |
+          bundle config path vendor/bundle
       - name: Install the current environment to the system
         run:
           bundle install --gemfile gemfiles/rubocop.gemfile --jobs 4 --retry 3
