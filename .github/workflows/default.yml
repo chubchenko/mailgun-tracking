@@ -32,6 +32,24 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
 
+      - name: Install Bundler
+        run: |
+          gem install bundler
+
+      - name: Configure Gemfile
+        run: |
+          bundle config --global gemfile ${{ matrix.gemfile }}
+
+      - name: Install Ruby deps
+        run: |
+          bundle install --jobs 4 --retry 3
+
+      - name: Run RSpec
+      run: |
+        bundle exec rspec
+
+
+
 
 
       # - uses: actions/checkout@v1

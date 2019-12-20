@@ -1,0 +1,5 @@
+name: Default
+
+on:
+  schedule:
+    - cron: '0 0 * * *'

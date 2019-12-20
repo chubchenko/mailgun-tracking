@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-appraise 'sinatra' do
-  gem 'sinatra', '~> 2.0', '>= 2.0.1'
-end
-
-appraise 'rack' do
-end
+# appraise 'sinatra' do
+#   gem 'sinatra', '~> 2.0', '>= 2.0.1'
+# end
+#
+# appraise 'rack' do
+# end
 
 appraise 'rails-4-2' do
   gem 'rails', '~> 4.2', '>= 4.2.10'
@@ -32,11 +32,11 @@ if RUBY_VERSION >= '2.5.0'
     gem 'rails', github: 'rails'
   end
 
-  appraise 'hanami-head' do
-    gem 'hanami', github: 'hanami'
-  end
+  # appraise 'hanami-head' do
+  #   gem 'hanami', github: 'hanami'
+  # end
 end
 
-appraise 'hanami-1' do
-  gem 'hanami', '~> 1.3'
-end
+# appraise 'hanami-1' do
+#   gem 'hanami', '~> 1.3'
+# end
