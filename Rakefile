@@ -3,6 +3,11 @@
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 
+task :coverage do
+  ENV['COVERAGE'] = '1'
+  Rake::Task['spec:unit'].execute
+end
+
 namespace :spec do
   RSpec::Core::RakeTask.new(:unit) do |t|
     t.pattern = 'spec/mailgun/**/*_spec.rb'

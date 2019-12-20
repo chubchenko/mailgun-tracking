@@ -42,7 +42,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: COVERAGE=true bundle exec rake
+          coverageCommand: bundle exec coverage
 
   rspec:
     needs: [rubocop, coverage]
