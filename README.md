@@ -74,7 +74,7 @@ end
 
 ```ruby
 Mailgun::Tracking.configure do |config|
-  config.notifier.subscribe(:bounced, Bounced.new)
+  config.notifier.subscribe(:bounced, Bounced.new(Rails.logger))
 end
 ```
 
