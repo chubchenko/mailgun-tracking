@@ -58,7 +58,51 @@ jobs:
         with:
           coverageCommand: bundle exec rake coverage
 
-  rspec:
+  unit:
+    needs: [rubocop, coverage]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['2.4.x', '2.5.x', '2.6.x']
+        # gemfile: [
+        #   'gemfiles/rails_4_2.gemfile',
+        #   'gemfiles/rails_5_0.gemfile',
+        #   'gemfiles/rails_5_1.gemfile',
+        #   'gemfiles/rails_5_2.gemfile',
+        #   'gemfiles/rails_6_0.gemfile',
+        #   'gemfiles/rails_head.gemfile',
+        #   'gemfiles/rack.gemfile'
+        # ]
+        # exclude:
+        #   - ruby: '2.4.x'
+        #     gemfile: 'gemfiles/rails_6_0.gemfile'
+        #   - ruby: '2.4.x'
+        #     gemfile: 'gemfiles/rails_head.gemfile'
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install a bundler gem
+        run: |
+          gem install bundler -v 1.17.3
+      - name: Set a configuration value
+        run: |
+          bundle config --global gemfile ${{ matrix.gemfile }}
+      - name: Install the current environment to the system
+        run:
+          bundle install --jobs 4 --retry 3
+      - name: Run RSpec
+        run: |
+          bundle exec rake
+      # - name: E2E + RoR
+      #   run: |
+      #     bundle exec rake spec:integration:rails
+
+
+  ror:
     needs: [rubocop, coverage]
     runs-on: ubuntu-latest
     strategy:
@@ -94,12 +138,68 @@ jobs:
       - name: Install the current environment to the system
         run:
           bundle install --jobs 4 --retry 3
-      - name: Run RSpec
-        run: |
-          bundle exec rake
       - name: E2E + RoR
         run: |
           bundle exec rake spec:integration:rails
+
+  rack:
+    needs: [rubocop, coverage]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['2.4.x', '2.5.x', '2.6.x']
+        gemfile: [
+          'gemfiles/rack.gemfile'
+        ]
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install a bundler gem
+        run: |
+          gem install bundler -v 1.17.3
+      - name: Set a configuration value
+        run: |
+          bundle config --global gemfile ${{ matrix.gemfile }}
+      - name: Install the current environment to the system
+        run:
+          bundle install --jobs 4 --retry 3
       - name: E2E + Rack
         run: |
           bundle exec rake spec:integration:rack
+
+  hanami:
+    needs: [rubocop, coverage]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['2.4.x', '2.5.x', '2.6.x']
+        gemfile: [
+          'gemfiles/hanami_1.gemfile',
+          'gemfiles/hanami_head.gemfile'
+        ]
+        exclude:
+          - ruby: '2.4.x'
+            gemfile: 'gemfiles/hanami_head.gemfile'
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install a bundler gem
+        run: |
+          gem install bundler -v 1.17.3
+      - name: Set a configuration value
+        run: |
+          bundle config --global gemfile ${{ matrix.gemfile }}
+      - name: Install the current environment to the system
+        run:
+          bundle install --jobs 4 --retry 3
+      - name: E2E + Rack
+        run: |
+          bundle exec rake spec:integration:hanami
