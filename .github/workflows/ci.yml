@@ -71,7 +71,8 @@ jobs:
           'gemfiles/rails_5_1.gemfile',
           'gemfiles/rails_5_2.gemfile',
           'gemfiles/rails_6_0.gemfile',
-          'gemfiles/rails_head.gemfile'
+          'gemfiles/rails_head.gemfile',
+          'gemfiles/rack.gemfile'
         ]
         exclude:
           - ruby: '2.4.x'
@@ -99,3 +100,6 @@ jobs:
       - name: E2E + RoR
         run: |
           bundle exec rake spec:integration:rails
+      - name: E2E + Rack
+        run: |
+          bundle exec rake spec:integration:rack
