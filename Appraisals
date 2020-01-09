@@ -7,8 +7,10 @@ end
 appraise 'rack' do
 end
 
-appraise 'rails-4-2' do
-  gem 'rails', '~> 4.2', '>= 4.2.10'
+if RUBY_VERSION < '2.7.0'
+  appraise 'rails-4-2' do
+    gem 'rails', '~> 4.2', '>= 4.2.10'
+  end
 end
 
 appraise 'rails-5-0' do

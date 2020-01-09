@@ -235,6 +235,18 @@ jobs:
       - run: bundle exec rake spec:unit
       - appraisal-matrix
 
+  ruby-2-7:
+    executor:
+      name: default
+      tag: "2.7"
+    steps:
+      - restore_cache:
+          key: checkout-{{ .Branch }}-{{ .Revision }}
+      - appraisal-install
+      - run: bundle exec rake spec:unit
+      - appraisal-matrix:
+          rails-4-2: false
+
   ruby-head:
     executor: default
     steps:
@@ -242,7 +254,8 @@ jobs:
           key: checkout-{{ .Branch }}-{{ .Revision }}
       - appraisal-install
       - run: bundle exec rake spec:unit
-      - appraisal-matrix
+      - appraisal-matrix:
+          rails-4-2: false
 
 workflows:
   version: 2
