@@ -5,7 +5,10 @@ require:
 AllCops:
   TargetRubyVersion: 2.4
 
-Metrics/LineLength:
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
   Max: 120
 
 Metrics/BlockLength:

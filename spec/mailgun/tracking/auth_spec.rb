@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mailgun::Tracking::Auth do
   describe '.call' do
     it
