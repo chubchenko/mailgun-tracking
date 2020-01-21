@@ -5,7 +5,7 @@ require 'openssl'
 module Mailgun
   module Tracking
     class Auth
-      def self.call(payload, _env)
+      def self.call(payload, _env = nil)
         new(payload).valid?
       end
 
