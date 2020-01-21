@@ -13,18 +13,20 @@ RSpec.shared_examples 'acts as rack' do
     allow(delivered).to receive(:call)
     allow(Delivered).to receive(:new).and_return(delivered)
 
-    Mailgun::Tracking.notifier.subscribe(:delivered, Delivered.new)
+    Mailgun::Tracking.on(:delivered, Delivered.new)
 
-    Mailgun::Tracking.notifier.subscribe :bounced do |payload|
+    Mailgun::Tracking.on :bounced do |payload|
       Delivered.new.call(payload)
     end
 
-    Mailgun::Tracking.notifier.all(Delivered.new)
+    Mailgun::Tracking.all(Delivered.new)
   end
 
   it do
     post('/mailgun', payload.to_json, 'CONTENT_TYPE' => 'application/json')
-    expect(delivered).to have_received(:call).with(Mailgun::Tracking::Payload.new(payload)).twice
+    expect(delivered).to have_received(:call).with(
+      payload
+    ).twice
   end
 
   context 'when the signature comparison is unsuccessful' do

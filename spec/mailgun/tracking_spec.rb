@@ -14,11 +14,13 @@ RSpec.describe Mailgun::Tracking do
 
   describe '.configure' do
     before do
+      allow(Mailgun::Tracking::Fanout).to receive(:all)
+
       described_class.configure do |config|
         config.api_key = 'dab36017-478a-4373-9378-7070eb5968b5'
         config.endpoint = '/mailgun-tracking'
 
-        config.notifier.all(proc {})
+        config.all(proc {})
       end
     end
 
@@ -31,7 +33,7 @@ RSpec.describe Mailgun::Tracking do
     end
 
     it 'adds subscribers' do
-      expect(described_class.notifier).not_to be_empty
+      expect(Mailgun::Tracking::Fanout).to have_received(:all).with(instance_of(Proc))
     end
   end
 end
