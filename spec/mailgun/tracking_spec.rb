@@ -12,13 +12,18 @@ RSpec.describe Mailgun::Tracking do
     end.to raise_error(NoMethodError)
   end
 
+  it { is_expected.not_to respond_to(:non_existent_method) }
+
   describe '.configure' do
     before do
+      allow(Mailgun::Tracking::Fanout).to receive(:on)
       allow(Mailgun::Tracking::Fanout).to receive(:all)
 
       described_class.configure do |config|
         config.api_key = 'dab36017-478a-4373-9378-7070eb5968b5'
         config.endpoint = '/mailgun-tracking'
+
+        config.on('delivered', proc {})
 
         config.all(proc {})
       end
@@ -32,8 +37,8 @@ RSpec.describe Mailgun::Tracking do
       expect(described_class.endpoint).to eq('/mailgun-tracking')
     end
 
-    it 'adds subscribers' do
-      expect(Mailgun::Tracking::Fanout).to have_received(:all).with(instance_of(Proc))
-    end
+    it { expect(Mailgun::Tracking::Fanout).to have_received(:on).with('delivered', instance_of(Proc)) }
+
+    it { expect(Mailgun::Tracking::Fanout).to have_received(:all).with(instance_of(Proc)) }
   end
 end

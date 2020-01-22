@@ -14,14 +14,14 @@ module Mailgun
       yield(self)
     end
 
-    def on(event, callable = ::Proc.new)
+    def on(event, callable)
       ::Mailgun::Tracking::Fanout.on(
         event.to_s.dup.freeze,
         callable
       )
     end
 
-    def all(callable = ::Proc.new)
+    def all(callable)
       ::Mailgun::Tracking::Fanout.all(
         callable
       )
