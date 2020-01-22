@@ -14,16 +14,16 @@ module Mailgun
       yield(self)
     end
 
-    def on(event, callable)
+    def on(event, callable = nil, &block)
       ::Mailgun::Tracking::Fanout.on(
         event.to_s.dup.freeze,
-        callable
+        callable || block
       )
     end
 
-    def all(callable)
+    def all(callable = nil, &block)
       ::Mailgun::Tracking::Fanout.all(
-        callable
+        callable || block
       )
     end
 
