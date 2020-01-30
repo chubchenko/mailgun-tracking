@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Artem Chubchenko']
   spec.email         = ['artem.chubchenko@gmail.com']
 
-  spec.summary       = 'Integration with Mailgun Webhooks'
+  spec.summary       = 'Mailgun webhook integration for Rack/RoR application'
   spec.description   = spec.summary
   spec.homepage      = 'https://github.com/chubchenko/mailgun-tracking'
   spec.license       = 'MIT'
@@ -33,8 +33,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rack-test', '>= 0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.7'
-  spec.add_development_dependency 'rubocop', '~> 0.79.0'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.5'
-  spec.add_development_dependency 'rubocop-rspec', '~> 1.36'
   spec.add_development_dependency 'simplecov', '~> 0.17.1'
 end
