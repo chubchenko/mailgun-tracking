@@ -1,4 +1,4 @@
-name: Lint Ruby
+name: RuboCop
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  rubocop:
+  default:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -15,8 +15,17 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.7.x
-    - name: Lint Ruby code with RuboCop
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gem-${{ hashFiles('**/rubocop.gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gem-
+    - name: Setting up Bundler
       run: |
         gem install bundler
+        bundle config path vendor/bundle
         bundle install --gemfile gemfiles/rubocop.gemfile --jobs 4 --retry 3
-        bundle exec --gemfile gemfiles/rubocop.gemfile rubocop
+    - name: Run RuboCop
+      run: |
+        bundle exec --gemfile gemfiles/rubocop.gemfile rubocop --parallel
