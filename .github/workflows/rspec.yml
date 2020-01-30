@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['2.4.x', '2.5.x', '2.6.x', '2.7.x']
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: ...
+        run: |
+          gem install bundler
+      - name: ...
+        run:
+          bundle install --jobs 4 --retry 3
+      - name: Run RSpec
+        run: |
+          bundle exec rspec --pattern "spec/mailgun/**/*_spec.rb"
