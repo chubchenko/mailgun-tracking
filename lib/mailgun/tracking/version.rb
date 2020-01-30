@@ -13,7 +13,7 @@ module Mailgun
       #
       # @return [Integer]
       def major
-        2
+        3
       end
 
       # Minor version.
