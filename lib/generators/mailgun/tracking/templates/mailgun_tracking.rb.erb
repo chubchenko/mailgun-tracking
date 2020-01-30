@@ -6,7 +6,7 @@ Mailgun::Tracking.configure do |config|
   config.api_key = ENV['MAILGUN_API_KEY']
 <% end -%>
 
-  # Mailgun Webhook API endpoint. Default is '/mailgun'.
+  # Mailgun callback URL. Default is '/mailgun-tracking'.
 <% if endpoint -%>
   config.endpoint = <%= endpoint %>
 <% else -%>

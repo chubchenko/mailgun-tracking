@@ -2,11 +2,12 @@
 
 module Mailgun
   module Tracking
-    # This module holds the Mailgun Tracking version information.
+    # The module which hold version data.
     module Version
       module_function
 
       KEYS = %i[major minor patch].freeze
+      DOT = '.'
 
       # Major version.
       #
@@ -29,25 +30,25 @@ module Mailgun
         0
       end
 
-      # Returns a hash representation of version.
+      # Return a hash representation of version.
       #
       # @return [Hash]
       def to_h
-        Hash[KEYS.zip(to_a)]
+        ::Hash[KEYS.zip(to_a)]
       end
 
-      # Returns a string representation of version.
+      # Return an array representation of version.
       #
       # @return [Array]
       def to_a
         [major, minor, patch]
       end
 
-      # Returns an array representation of version.
+      # Return a string representation of version.
       #
       # @return [String]
       def to_s
-        to_a.join('.')
+        to_a.join(DOT)
       end
     end
   end

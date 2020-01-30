@@ -4,23 +4,19 @@ require 'singleton'
 
 module Mailgun
   module Tracking
-    # Stores configuration information.
+    # Configuration for Mailgun Tracking.
     class Configuration
-      include Singleton
+      include ::Singleton
 
       DEFAULT_ENDPOINT = '/mailgun'
 
-      # Mailgun API public key.
-      #
-      # @return [String]
+      # @return [String] Mailgun API public key.
       attr_accessor :api_key
 
-      # Mailgun Webhook API endpoint.
-      #
-      # @return [String]
+      # @return [String] Mailgun callback URL.
       attr_accessor :endpoint
 
-      # Initializes a new Configuration object.
+      # Initialize a Mailgun::Tracking::Configuration object.
       def initialize
         @endpoint = DEFAULT_ENDPOINT
       end

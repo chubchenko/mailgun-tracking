@@ -1,68 +1,60 @@
 # frozen_string_literal: true
 
 RSpec.describe Mailgun::Tracking::Middleware do
-  subject(:rack) { described_class.new(app) }
-
-  let(:app) { proc { [200, {}, []] } }
-  let(:notifier) { instance_double(Mailgun::Tracking::Notifier) }
-  let(:request) do
-    instance_double(Mailgun::Tracking::Request, payload: payload, media_type: 'application/x-www-form-urlencoded')
+  let(:app) do
+    lambda do |_env|
+      [200, { 'Content-Type' => 'text/plain' }, ['^_^']]
+    end
   end
-  let(:env) { env_for('http://localhost:3000') }
-  let(:payload) { Mailgun::Tracking::Payload.new('event-data' => { event: 'delivered' }) }
+  let(:middleware) { described_class.new(app) }
 
-  before do
-    allow(Mailgun::Tracking).to receive(:notifier).and_return(notifier)
-    allow(Mailgun::Tracking::Request).to receive(:new).with(env).and_return(request)
+  context 'when a request is not respond to the specified URL' do
+    let(:env) { env_for('http://localhost:3000') }
+
+    it { expect(middleware.call(env)).to eq([200, { 'Content-Type' => 'text/plain' }, ['^_^']]) }
   end
 
-  describe '#call' do
-    context 'when request is not respond to the specified URL' do
-      before do
-        allow(request).to receive(:mailgun_tracking?).and_return(false)
-        allow(notifier).to receive(:broadcast)
-      end
-
-      it { expect(rack.call(env)).to include(200) }
-
-      it do
-        rack.call(env)
-        expect(Mailgun::Tracking).not_to have_received(:notifier)
-      end
+  context 'when a request is done not as an HTTP POST request' do
+    let(:env) do
+      env_for(
+        'http://localhost:3000/mailgun',
+        'REQUEST_METHOD' => 'GET',
+        'CONTENT_TYPE' => 'application/json',
+        input: payload.to_json
+      )
     end
+    let(:payload) { fixture('delivered.json') }
 
-    context 'when request is respond to the specified URL and the signature comparison is unsuccessful' do
-      let(:params) { fixture('delivered.json') }
+    it { expect(middleware.call(env)).to eq([200, { 'Content-Type' => 'text/plain' }, ['^_^']]) }
+  end
 
-      before do
-        allow(notifier).to receive(:broadcast).and_raise(Mailgun::Tracking::InvalidSignature)
-        allow(request).to receive(:mailgun_tracking?).and_return(true)
-        allow(request).to receive(:params).and_return(params)
-      end
-
-      it { expect(rack.call(env)).to include(400) }
-
-      it do
-        rack.call(env)
-        expect(Mailgun::Tracking).to have_received(:notifier)
-      end
+  context 'when request is respond to the specified URL, POST request and the signature comparison is unsuccessful' do
+    let(:env) do
+      env_for(
+        'http://localhost:3000/mailgun',
+        'REQUEST_METHOD' => 'POST',
+        'CONTENT_TYPE' => 'application/json',
+        input: payload.to_json
+      )
     end
+    let(:payload) { fixture('delivered.json') }
 
-    context 'when request is respond to the specified URL and the signature comparison is successful' do
-      let(:params) { fixture('delivered.json') }
+    before { payload['signature']['timestamp'] = '' }
 
-      before do
-        allow(request).to receive(:mailgun_tracking?).and_return(true)
-        allow(request).to receive(:params).and_return(params)
-        allow(notifier).to receive(:broadcast)
-      end
+    it { expect(middleware.call(env)).to eq([400, {}, []]) }
+  end
 
-      it { expect(rack.call(env)).to include(200) }
-
-      it do
-        rack.call(env)
-        expect(Mailgun::Tracking).to have_received(:notifier)
-      end
+  context 'when everything matches (URL, POST, Signature)' do
+    let(:env) do
+      env_for(
+        'http://localhost:3000/mailgun',
+        'REQUEST_METHOD' => 'POST',
+        'CONTENT_TYPE' => 'application/json',
+        input: payload.to_json
+      )
     end
+    let(:payload) { fixture('delivered.json') }
+
+    it { expect(middleware.call(env)).to eq([200, {}, []]) }
   end
 end

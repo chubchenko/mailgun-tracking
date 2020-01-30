@@ -1,66 +1,98 @@
 # frozen_string_literal: true
 
-require_relative 'tracking/configuration'
-require_relative 'tracking/exceptions'
-require_relative 'tracking/listener'
-require_relative 'tracking/middleware'
-require_relative 'tracking/notifier'
-require_relative 'tracking/payload'
-require_relative 'tracking/signature'
-require_relative 'tracking/subscriber'
-require_relative 'tracking/util'
-require_relative 'tracking/version'
-require_relative 'tracking/railtie' if defined?(Rails)
-require_relative 'tracking/request'
+require 'mailgun/tracking/configuration'
+require 'mailgun/tracking/middleware'
+require 'mailgun/tracking/version'
+require 'mailgun/tracking/railtie' if defined?(::Rails)
+require 'mailgun/tracking/fanout'
 
-# Module for interacting with the Mailgun.
 module Mailgun
-  # Namespace for classes and modules that handle Mailgun Webhooks.
+  # The namespace for classes and modules that handle Mailgun webhooks.
   module Tracking
     module_function
 
-    # Default way to setup Mailgun Tracking.
+    # The default way to set up Mailgun Tracking.
+    #
+    # @yield [self] block yields itself.
     #
     # @example
     #   Mailgun::Tracking.configure do |config|
     #     config.api_key = ENV['MAILGUN_API_KEY']
+    #
     #     config.endpoint = '/mailgun-tracking'
     #
-    #     config.notifier.subscribe :delivered do |payload|
+    #     config.on 'delivered' do |payload|
     #       # Do something with the incoming data.
     #     end
     #
-    #     config.notifier.subscribe :bounced, Bounced.new
+    #     # The object should respond to #call
+    #     config.on 'bounced', Bounced.new
     #
-    #     config.notifier.all do |payload|
-    #       # Handle all event types.
+    #     config.all do |payload|
+    #       # Do something with the incoming data.
     #     end
     #   end
-    #
-    # @return [void]
     def configure
       yield(self)
     end
 
-    # A Notifier instance.
+    # Subscribe to an event.
     #
-    # @return [Mailgun::Tracking::Notifier]
-    def notifier
-      @notifier ||= Notifier.new
+    # @param event [Symbol, String] the event identifier.
+    # @param callable [#call] the event handler.
+    #
+    # @example
+    #   Mailgun::Tracking.configure do |config|
+    #     config.on 'delivered' do |payload|
+    #       # Do something with the incoming data.
+    #     end
+    #
+    #     # The object should respond to #call
+    #     config.on 'bounced', Bounced.new
+    #   end
+    def on(event, callable = nil, &block)
+      ::Mailgun::Tracking::Fanout.on(
+        event.to_s.dup.freeze,
+        callable || block
+      )
     end
 
-    # Delegate other missing methods to configuration.
+    # Subscribe to all events.
+    #
+    # @param callable [#call] the event handler.
+    #
+    # @example
+    #   Mailgun::Tracking.configure do |config|
+    #     config.all do |payload|
+    #       # Do something with the incoming data.
+    #     end
+    #
+    #     # The object should respond to #call
+    #     config.all, All.new
+    #   end
+    def all(callable = nil, &block)
+      ::Mailgun::Tracking::Fanout.all(
+        callable || block
+      )
+    end
+
+    # Delegate any missing method call to the configuration.
     def method_missing(method_name, *arguments, &block)
-      if Configuration.instance.respond_to?(method_name)
-        Configuration.instance.public_send(method_name, *arguments, &block)
-      else
-        super
-      end
+      return super unless configuration.respond_to?(method_name)
+
+      configuration.public_send(method_name, *arguments, &block)
     end
 
-    # Replaces the Object.respond_to?() method.
+    # Replace the Object.respond_to?() method.
     def respond_to_missing?(method_name, include_private = false)
-      Configuration.instance.respond_to?(method_name) || super
+      configuration.respond_to?(method_name) || super
     end
+
+    # @return [Mailgun::Tracking::Configuration]
+    def configuration
+      ::Mailgun::Tracking::Configuration.instance
+    end
+
+    private_class_method :configuration
   end
 end

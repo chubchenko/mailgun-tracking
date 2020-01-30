@@ -48,11 +48,11 @@ This command will generate the Mailgun Tracking configuration file under
 
 ```ruby
 Mailgun::Tracking.configure do |config|
-  config.notifier.subscribe :delivered do |payload|
+  config.on 'delivered' do |payload|
     # Do something with the incoming data.
   end
 
-  config.notifier.all do |payload|
+  config.all do |payload|
     # Handle all event types.
   end
 end
@@ -74,7 +74,7 @@ end
 
 ```ruby
 Mailgun::Tracking.configure do |config|
-  config.notifier.subscribe(:bounced, Bounced.new(Rails.logger))
+  config.on 'bounced', Bounced.new(Rails.logger)
 end
 ```
 
@@ -90,9 +90,9 @@ Mailgun::Tracking.configure do |config|
   config.api_key = 'key-qblubkqnkdn4lfes5oscf57ryllaia42'
   config.endpoint = '/mailgun'
 
-  config.notifier.subscribe(:bounced, Bounced.new)
+  config.on 'bounced', Bounced.new
 
-  config.notifier.all do |payload|
+  config.all do |payload|
     # Handle all event types.
   end
 end

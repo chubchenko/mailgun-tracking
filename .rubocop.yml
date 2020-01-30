@@ -5,17 +5,17 @@ require:
 AllCops:
   TargetRubyVersion: 2.4
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 Metrics/BlockLength:
   ExcludedMethods:
     - describe
 
-Naming/MethodName:
-  IgnoredPatterns:
-    - '\APOST'
-
 RSpec/DescribeClass:
   Exclude:
     - 'spec/integration/**/*'
+
+Naming/FileName:
+  Exclude:
+    - 'lib/mailgun-tracking.rb'
