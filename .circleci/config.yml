@@ -187,18 +187,6 @@ jobs:
             COVERAGE=true bundle exec rake
             ./tmp/cc-test-reporter after-build --exit-code $?
 
-  rubocop:
-    executor:
-      name: default
-      tag: "2.4"
-    steps:
-      - restore_cache:
-          key: checkout-{{ .Branch }}-{{ .Revision }}
-      - run: bundle install
-      - run:
-          name: Run RuboCop
-          command: bundle exec rubocop --parallel
-
   ruby-2-4:
     executor:
       name: default
@@ -265,25 +253,18 @@ workflows:
       - code-climate:
           requires:
             - checkout
-      - rubocop:
-          requires:
-            - checkout
       - ruby-2-4:
           requires:
             - code-climate
-            - rubocop
       - ruby-2-5:
           requires:
             - code-climate
-            - rubocop
       - ruby-2-6:
           requires:
             - code-climate
-            - rubocop
       - ruby-head:
           requires:
             - code-climate
-            - rubocop
 
   nightly:
     triggers:
