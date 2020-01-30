@@ -185,7 +185,7 @@ jobs:
           command: |
             ./tmp/cc-test-reporter before-build
             COVERAGE=true bundle exec rake
-            ./tmp/cc-test-reporter after-build --exit-code $?
+            ./tmp/cc-test-reporter after-build --coverage-input-type clover --exit-code $?
 
   rubocop:
     executor:
