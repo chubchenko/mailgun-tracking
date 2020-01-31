@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Set up Ruby
-        uses: actions/setup-ruby@v1
+      - name: Set up JRuby
+        uses: eregon/use-ruby-action@v1
         with:
           ruby-version: jruby
       - name: Setting up Bundler
