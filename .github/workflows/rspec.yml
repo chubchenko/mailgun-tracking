@@ -21,7 +21,8 @@ jobs:
           'gemfiles/rails_6_0.gemfile',
           'gemfiles/rails_head.gemfile',
           'gemfiles/hanami_1.gemfile',
-          'gemfiles/hanami_head.gemfile'
+          'gemfiles/hanami_head.gemfile',
+          'gemfiles/sinatra.gemfile'
         ]
     steps:
       - uses: actions/checkout@master
