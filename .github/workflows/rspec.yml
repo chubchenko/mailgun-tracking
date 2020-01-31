@@ -33,6 +33,7 @@ jobs:
       - name: Setting up Bundler
         run: |
           gem install bundler
+          bundle config --global gemfile ${{ matrix.gemfile }}
           bundle install --jobs 4 --retry 3
       - name: Run RSpec
         run: |
