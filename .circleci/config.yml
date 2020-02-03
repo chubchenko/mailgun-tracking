@@ -194,11 +194,11 @@ jobs:
     steps:
       - restore_cache:
           key: checkout-{{ .Branch }}-{{ .Revision }}
-      - appraisal-install
-      - appraisal-matrix:
-          rails-6-0: false
-          rails-head: false
-          hanami-head: false
+      # - appraisal-install
+      # - appraisal-matrix:
+      #     rails-6-0: false
+      #     rails-head: false
+      #     hanami-head: false
 
   ruby-2-5:
     executor:
@@ -207,8 +207,8 @@ jobs:
     steps:
       - restore_cache:
           key: checkout-{{ .Branch }}-{{ .Revision }}
-      - appraisal-install
-      - appraisal-matrix
+      # - appraisal-install
+      # - appraisal-matrix
 
   ruby-2-6:
     executor:
@@ -217,8 +217,8 @@ jobs:
     steps:
       - restore_cache:
           key: checkout-{{ .Branch }}-{{ .Revision }}
-      - appraisal-install
-      - appraisal-matrix
+      # - appraisal-install
+      # - appraisal-matrix
 
   ruby-2-7:
     executor:
@@ -227,18 +227,18 @@ jobs:
     steps:
       - restore_cache:
           key: checkout-{{ .Branch }}-{{ .Revision }}
-      - appraisal-install
-      - appraisal-matrix:
-          rails-4-2: false
+      # - appraisal-install
+      # - appraisal-matrix:
+      #     rails-4-2: false
 
   ruby-head:
     executor: default
     steps:
       - restore_cache:
           key: checkout-{{ .Branch }}-{{ .Revision }}
-      - appraisal-install
-      - appraisal-matrix:
-          rails-4-2: false
+      # - appraisal-install
+      # - appraisal-matrix:
+      #     rails-4-2: false
 
 workflows:
   version: 2
