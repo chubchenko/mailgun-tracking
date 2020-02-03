@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-require 'dummy/rails/application'
+if defined?(::Rails)
+  require 'dummy/rails/application'
 
-RSpec.describe 'Rails', type: :integration do
-  it_behaves_like 'acts as rack'
+  RSpec.describe 'Rails', type: :integration do
+    it_behaves_like 'acts as rack'
+  end
 end
