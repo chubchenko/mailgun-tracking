@@ -1,7 +1,7 @@
 # Mailgun Tracking
 
 [![Gem Version Badge](https://badge.fury.io/rb/mailgun-tracking.svg)](https://badge.fury.io/rb/mailgun-tracking)
-[![CircleCI Badge](https://circleci.com/gh/chubchenko/mailgun-tracking.svg?style=shield)](https://circleci.com/gh/chubchenko/mailgun-tracking)
+[![Build](https://github.com/chubchenko/mailgun-tracking/workflows/Build/badge.svg)](https://github.com/chubchenko/mailgun-tracking/actions)
 [![Gem Downloads Badge](https://img.shields.io/gem/dt/mailgun-tracking)](https://rubygems.org/gems/mailgun-tracking)
 [![Code Climate Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/gpa.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking)
 [![Test Coverage Badge](https://codeclimate.com/github/chubchenko/mailgun-tracking/badges/coverage.svg)](https://codeclimate.com/github/chubchenko/mailgun-tracking/coverage)
