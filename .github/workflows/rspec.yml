@@ -9,6 +9,8 @@ on:
 jobs:
   rspec:
     runs-on: ubuntu-latest
+    env:
+      BUNDLER_VERSION: 1.17.3
     strategy:
       fail-fast: false
       matrix:
