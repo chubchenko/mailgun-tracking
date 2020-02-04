@@ -3,6 +3,8 @@ require:
   - rubocop-rspec
 
 AllCops:
+  Exclude:
+    - "bin/*"
   TargetRubyVersion: 2.4
 
 Layout/LineLength:
