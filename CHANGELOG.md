@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## master (unreleased)
+
+* Added
+  * Add [Dependabot](https://dependabot.com/) configuration
+
+* Changed
+  * Migrate from [CircleCI](circleci.com) to [GitHub Actions](https://github.com/features/actions)
+
+## 3.0.0 (2020-01-30)
+
+* Added
+  * Test with Ruby 2.7
+
+* Changed
+  * Use [catch_box](https://github.com/chubchenko/catch_box) as a system for hooks set up.
+  * Broadcast pure `Hash` object instead of `Mailgun::Tracking::Payload`
+  * Change subscription way from `Mailgun::Tracking.notifier#on` and `Mailgun::Tracking.notifier#all` to `Mailgun::Tracking#on`, `Mailgun::Tracking#all`
+
 ## 2.0.0 (2019-11-20)
 
 * Added
