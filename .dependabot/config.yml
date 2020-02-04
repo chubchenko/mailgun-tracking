@@ -1,0 +1,13 @@
+version: 1
+
+update_configs:
+  - package_manager: "ruby:bundler"
+    directory: "/"
+    update_schedule: "live"
+    default_reviewers:
+      - "chubchenko"
+  - package_manager: "ruby:bundler"
+    directory: "/gemfiles"
+    update_schedule: "live"
+    default_reviewers:
+      - "chubchenko"
