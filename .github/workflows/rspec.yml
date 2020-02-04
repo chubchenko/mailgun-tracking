@@ -7,7 +7,7 @@ on:
   pull_request:
 
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   rspec:
@@ -17,20 +17,20 @@ jobs:
       matrix:
         ruby: [2.4, 2.5, 2.6, 2.7, jruby]
         gemfile: [
-          'gemfiles/rails_5_0.gemfile',
-          'gemfiles/rails_5_1.gemfile',
-          'gemfiles/rails_5_2.gemfile',
-          'gemfiles/rails_6_0.gemfile',
-          'gemfiles/rails_head.gemfile',
-          'gemfiles/hanami_1.gemfile',
-          'gemfiles/hanami_head.gemfile',
-          'gemfiles/sinatra.gemfile'
+          "gemfiles/rails_5_0.gemfile",
+          "gemfiles/rails_5_1.gemfile",
+          "gemfiles/rails_5_2.gemfile",
+          "gemfiles/rails_6_0.gemfile",
+          "gemfiles/rails_head.gemfile",
+          "gemfiles/hanami_1.gemfile",
+          "gemfiles/hanami_head.gemfile",
+          "gemfiles/sinatra.gemfile"
         ]
         exclude:
           - ruby: 2.4
-            gemfile: 'gemfiles/rails_6_0.gemfile'
+            gemfile: "gemfiles/rails_6_0.gemfile"
           - ruby: 2.4
-            gemfile: 'gemfiles/rails_head.gemfile'
+            gemfile: "gemfiles/rails_head.gemfile"
     steps:
       - uses: actions/checkout@master
       - name: Set up Ruby

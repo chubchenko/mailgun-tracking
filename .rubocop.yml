@@ -14,8 +14,8 @@ Metrics/BlockLength:
 
 RSpec/DescribeClass:
   Exclude:
-    - 'spec/integration/**/*'
+    - "spec/integration/**/*"
 
 Naming/FileName:
   Exclude:
-    - 'lib/mailgun-tracking.rb'
+    - "lib/mailgun-tracking.rb"
