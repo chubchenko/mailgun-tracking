@@ -1,0 +1,28 @@
+name: coverage
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+
+jobs:
+  codeclimate:
+    runs-on: ubuntu-latest
+    env:
+      COVERAGE: true
+  steps:
+    - uses: actions/checkout@master
+    - name: Set up Ruby 2.7
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.7.x
+    - name: Setting up Bundler
+      run: |
+        bundle install --jobs 4 --retry 3
+    - name: Publish code coverage to Code Climate
+      uses: paambaati/codeclimate-action@v2.4.0
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+        coverageCommand: bundle exec rspec --pattern spec/mailgun/**/*_spec.rb
