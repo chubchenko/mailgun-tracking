@@ -4,6 +4,7 @@
 
 * Added
   * Add [Dependabot](https://dependabot.com/) configuration
+  * Add docs workflow to lint markdown files
 
 * Changed
   * Migrate from [CircleCI](circleci.com) to [GitHub Actions](https://github.com/features/actions)
