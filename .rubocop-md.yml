@@ -1,8 +1,13 @@
 inherit_from: ".rubocop.yml"
 
 require:
-  - rubocop-md
+  - "rubocop-md"
 
 AllCops:
   Include:
     - "**/*.md"
+
+Naming/FileName:
+  Exclude:
+    - "**/*.md"
+    - "**/*.markdown"

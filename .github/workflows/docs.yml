@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.7.x
-      - name: Lint Markdown files with MDL
+      - name: Lint Markdown files with Forspell
         run: |
           sudo apt-get install hunspell
           gem install forspell
