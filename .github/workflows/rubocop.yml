@@ -19,4 +19,4 @@ jobs:
       run: |
         gem install bundler
         bundle install --gemfile gemfiles/rubocop.gemfile --jobs 4 --retry 3
-        bundle exec --gemfile gemfiles/rubocop.gemfile rubocop
+        bundle exec --gemfile gemfiles/rubocop.gemfile rubocop --parallel
