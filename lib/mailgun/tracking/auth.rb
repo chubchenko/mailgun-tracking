@@ -30,7 +30,7 @@ module Mailgun
       def valid?
         @payload.dig(SIGNATURE, SIGNATURE) == \
           ::OpenSSL::HMAC.hexdigest(
-            ::OpenSSL::Digest::SHA256.new,
+            ::OpenSSL::Digest.new('SHA256'),
             ::Mailgun::Tracking.api_key,
             data
           )
