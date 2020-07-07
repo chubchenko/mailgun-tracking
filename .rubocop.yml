@@ -11,6 +11,9 @@ AllCops:
 Layout/LineLength:
   Max: 120
 
+Style/AccessorGrouping:
+  EnforcedStyle: separated
+
 Metrics/BlockLength:
   ExcludedMethods:
     - describe
