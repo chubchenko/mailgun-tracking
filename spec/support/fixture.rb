@@ -9,7 +9,7 @@ class FixtureFinder
   end
 
   def find
-    File.read(@fixture_path + '/' + @file)
+    File.read("#{@fixture_path}/#{@file}")
   end
 
   private
