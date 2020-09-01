@@ -10,11 +10,12 @@ module Mailgun
     #   use Mailgun::Tracking::Middleware
     class Middleware < ::CatchBox::Middleware
       # Initialize a Mailgun::Tracking::Middleware object.
-      #
-      # @param fanout [Mailgun::Tracking::Fanout]
-      # @param endpoint [String] Mailgun callback URL.
-      def initialize(app, fanout: ::Mailgun::Tracking::Fanout, endpoint: ::Mailgun::Tracking.endpoint)
-        super
+      def initialize(app)
+        super(
+          app,
+          fanout: ::Mailgun::Tracking::Fanout,
+          endpoint: ::Mailgun::Tracking.endpoint
+        )
       end
     end
   end
