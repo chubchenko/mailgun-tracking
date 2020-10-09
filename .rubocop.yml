@@ -14,10 +14,6 @@ Layout/LineLength:
 Style/AccessorGrouping:
   EnforcedStyle: separated
 
-Style/OptionalBooleanParameter:
-  Exclude:
-    - "lib/mailgun/tracking.rb"
-
 Metrics/BlockLength:
   ExcludedMethods:
     - describe
