@@ -15,7 +15,7 @@ Style/AccessorGrouping:
   EnforcedStyle: separated
 
 Metrics/BlockLength:
-  ExcludedMethods:
+  IgnoredMethods:
     - describe
 
 RSpec/DescribeClass:
