@@ -23,9 +23,9 @@ RSpec.describe Mailgun::Tracking do
         config.api_key = 'dab36017-478a-4373-9378-7070eb5968b5'
         config.endpoint = '/mailgun-tracking'
 
-        config.on('delivered', proc {})
+        config.on('delivered', proc { 'Will be called on the delivered event.' })
 
-        config.all(proc {})
+        config.all(proc { 'Will be called on each event.' })
       end
     end
 

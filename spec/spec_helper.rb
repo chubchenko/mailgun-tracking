@@ -6,7 +6,7 @@ require 'rack/test'
 require 'bundler/setup'
 require 'mailgun/tracking'
 
-Dir.glob(File.expand_path('support/**/*.rb', __dir__)).sort.each(&method(:require))
+Dir.glob(File.expand_path('support/**/*.rb', __dir__)).sort.each { |f| require f }
 
 RSpec.configure do |config|
   config.include(RackHelpers)
