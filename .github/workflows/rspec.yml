@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [2.4, 2.5, 2.6, 2.7, 3.0, jruby]
+        ruby: [2.5, 2.6, 2.7, 3.0, jruby]
         gemfile: [
           "gemfiles/rails_5_0.gemfile",
           "gemfiles/rails_5_1.gemfile",
@@ -27,13 +27,6 @@ jobs:
           "gemfiles/hanami_head.gemfile",
           "gemfiles/sinatra.gemfile"
         ]
-        exclude:
-          - ruby: 2.4
-            gemfile: "gemfiles/rails_6_0.gemfile"
-          - ruby: 2.4
-            gemfile: "gemfiles/rails_6_1.gemfile"
-          - ruby: 2.4
-            gemfile: "gemfiles/rails_head.gemfile"
     steps:
       - uses: actions/checkout@master
       - name: Set up Ruby

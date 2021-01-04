@@ -25,12 +25,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = Dir['{spec}/**/*']
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.4.0'
+  spec.required_ruby_version = '>= 2.5.0'
 
   spec.add_runtime_dependency 'catch_box', '~> 0.1.2'
 
   spec.add_development_dependency 'rack-test', '>= 0'
   spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.1'
   spec.add_development_dependency 'rspec', '~> 3.9'
-  spec.add_development_dependency 'simplecov', '~> 0.17.1'
+  spec.add_development_dependency 'simplecov', '~> 0.21.0'
 end
