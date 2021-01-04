@@ -8,6 +8,7 @@
 
 * Changed
   * Migrate from [CircleCI](circleci.com) to [GitHub Actions](https://github.com/features/actions)
+  * Drop support of Ruby 2.4
 
 ## 3.0.0 (2020-01-30)
 
