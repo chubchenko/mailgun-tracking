@@ -34,7 +34,7 @@ module Mailgun
       #
       # @return [Hash]
       def to_h
-        ::Hash[KEYS.zip(to_a)]
+        KEYS.zip(to_a).to_h
       end
 
       # Return an array representation of version.
